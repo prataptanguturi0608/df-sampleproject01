@@ -14,7 +14,8 @@
 		"type": "Binary",
 		"typeProperties": {
 			"location": {
-				"type": "SftpLocation"
+				"type": "SftpLocation",
+				"folderPath": "/Inbound"
 			}
 		}
 	}
