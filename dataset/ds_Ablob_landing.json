@@ -1,0 +1,23 @@
+{
+	"name": "ds_Ablob_landing",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_AzBlob_landing",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"folderPath": "customerorders",
+				"container": "landing"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	}
+}
