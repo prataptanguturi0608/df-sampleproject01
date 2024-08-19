@@ -66,7 +66,7 @@
 							"userProperties": [],
 							"typeProperties": {
 								"on": {
-									"value": "@split(variables('p_fileName'), '.')[1]",
+									"value": "@split(variables('v_fileName'), '.')[1]",
 									"type": "Expression"
 								},
 								"cases": [
@@ -91,7 +91,6 @@
 														"storeSettings": {
 															"type": "SftpReadSettings",
 															"recursive": true,
-															"wildcardFileName": "*.txt",
 															"enablePartitionDiscovery": false,
 															"disableChunking": false
 														},
