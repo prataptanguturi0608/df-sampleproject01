@@ -253,7 +253,13 @@
 												"inputs": [
 													{
 														"referenceName": "ds_sftp_Parquet",
-														"type": "DatasetReference"
+														"type": "DatasetReference",
+														"parameters": {
+															"p_SftpFilename": {
+																"value": "@variables('v_Filename')",
+																"type": "Expression"
+															}
+														}
 													}
 												],
 												"outputs": [
