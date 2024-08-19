@@ -278,7 +278,7 @@
 							},
 							"userProperties": [],
 							"typeProperties": {
-								"variableName": "p_fileName",
+								"variableName": "v_Filename",
 								"value": {
 									"value": "@item().name",
 									"type": "Expression"
@@ -292,6 +292,11 @@
 		"parameters": {
 			"p_fileName": {
 				"type": "string"
+			}
+		},
+		"variables": {
+			"v_Filename": {
+				"type": "String"
 			}
 		},
 		"annotations": []
