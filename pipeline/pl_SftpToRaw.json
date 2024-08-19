@@ -33,7 +33,7 @@
 				}
 			},
 			{
-				"name": "ForEachFileLoop",
+				"name": "ForEach1",
 				"type": "ForEach",
 				"dependsOn": [
 					{
@@ -52,43 +52,21 @@
 					"isSequential": true,
 					"activities": [
 						{
-							"name": "Copy data1",
-							"type": "Copy",
+							"name": "Set FileName",
+							"type": "SetVariable",
 							"dependsOn": [],
 							"policy": {
-								"timeout": "0.12:00:00",
-								"retry": 0,
-								"retryIntervalInSeconds": 30,
 								"secureOutput": false,
 								"secureInput": false
 							},
 							"userProperties": [],
 							"typeProperties": {
-								"source": {
-									"type": "BinarySource",
-									"storeSettings": {
-										"type": "SftpReadSettings",
-										"recursive": true,
-										"disableChunking": false
-									},
-									"formatSettings": {
-										"type": "BinaryReadSettings"
-									}
-								},
-								"enableStaging": false
-							},
-							"inputs": [
-								{
-									"referenceName": "ds_sftp_binary_FilesMetadata",
-									"type": "DatasetReference",
-									"parameters": {
-										"p_fileName": {
-											"value": "@item().name",
-											"type": "Expression"
-										}
-									}
+								"variableName": "p_fileName",
+								"value": {
+									"value": "@item().name",
+									"type": "Expression"
 								}
-							]
+							}
 						}
 					]
 				}
@@ -97,6 +75,9 @@
 		"variables": {
 			"list_files": {
 				"type": "Array"
+			},
+			"p_fileName": {
+				"type": "String"
 			}
 		},
 		"annotations": []
