@@ -1,5 +1,5 @@
 {
-	"name": "ds_sftp_binary_Filenames",
+	"name": "ds_sftp_binary_FilesMetadata",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "ls_Sftp_source",

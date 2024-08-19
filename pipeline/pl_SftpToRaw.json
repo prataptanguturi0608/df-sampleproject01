@@ -16,7 +16,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataset": {
-						"referenceName": "ds_sftp_binary",
+						"referenceName": "ds_sftp_binary_FileList",
 						"type": "DatasetReference"
 					},
 					"fieldList": [
