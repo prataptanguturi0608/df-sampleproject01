@@ -1,0 +1,16 @@
+{
+	"name": "ds_sftp_binary_Filenames",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_Sftp_source",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "SftpLocation"
+			}
+		}
+	}
+}
