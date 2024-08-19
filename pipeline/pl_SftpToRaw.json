@@ -52,20 +52,88 @@
 					"isSequential": true,
 					"activities": [
 						{
-							"name": "Set FileName",
-							"type": "SetVariable",
+							"name": "Switch2",
+							"type": "Switch",
 							"dependsOn": [],
-							"policy": {
-								"secureOutput": false,
-								"secureInput": false
-							},
 							"userProperties": [],
 							"typeProperties": {
-								"variableName": "p_fileName",
-								"value": {
-									"value": "@item().name",
+								"on": {
+									"value": "@split(item().name,'.')[1] ",
 									"type": "Expression"
-								}
+								},
+								"cases": [
+									{
+										"value": "txt",
+										"activities": [
+											{
+												"name": "Set variable1",
+												"type": "SetVariable",
+												"dependsOn": [],
+												"policy": {
+													"secureOutput": false,
+													"secureInput": false
+												},
+												"userProperties": [],
+												"typeProperties": {
+													"variableName": "p_fileName",
+													"value": {
+														"value": "\"txt\"",
+														"type": "Expression"
+													}
+												}
+											}
+										]
+									},
+									{
+										"value": "Json",
+										"activities": [
+											{
+												"name": "Set variable2",
+												"type": "SetVariable",
+												"dependsOn": [],
+												"policy": {
+													"secureOutput": false,
+													"secureInput": false
+												},
+												"userProperties": [],
+												"typeProperties": {
+													"variableName": "p_fileName",
+													"value": "Json"
+												}
+											}
+										]
+									},
+									{
+										"value": "Parquet",
+										"activities": [
+											{
+												"name": "Set variable3",
+												"type": "SetVariable",
+												"dependsOn": [],
+												"policy": {
+													"secureOutput": false,
+													"secureInput": false
+												},
+												"userProperties": [],
+												"typeProperties": {
+													"variableName": "p_fileName",
+													"value": "Parquet"
+												}
+											}
+										]
+									}
+								],
+								"defaultActivities": [
+									{
+										"name": "Wait1",
+										"type": "Wait",
+										"dependsOn": [],
+										"userProperties": [],
+										"typeProperties": {
+											"waitTimeInSeconds": 1
+										}
+									}
+								]
 							}
 						}
 					]
