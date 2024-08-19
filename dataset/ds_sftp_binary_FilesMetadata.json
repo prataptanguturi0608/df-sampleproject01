@@ -5,6 +5,11 @@
 			"referenceName": "ls_Sftp_source",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"p_fileName": {
+				"type": "string"
+			}
+		},
 		"annotations": [],
 		"type": "Binary",
 		"typeProperties": {
