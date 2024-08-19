@@ -1,0 +1,22 @@
+{
+	"name": "ds_sftp_csv",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_Sftp_source",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "SftpLocation",
+				"folderPath": "/Inbound"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	}
+}
