@@ -123,7 +123,13 @@
 												"inputs": [
 													{
 														"referenceName": "ds_sftp_txt",
-														"type": "DatasetReference"
+														"type": "DatasetReference",
+														"parameters": {
+															"p_SftpFilename": {
+																"value": "@variables('v_Filename')",
+																"type": "Expression"
+															}
+														}
 													}
 												],
 												"outputs": [
@@ -178,7 +184,13 @@
 												"inputs": [
 													{
 														"referenceName": "ds_sftp_Json",
-														"type": "DatasetReference"
+														"type": "DatasetReference",
+														"parameters": {
+															"p_SftpFilename": {
+																"value": "@variables('v_Filename')",
+																"type": "Expression"
+															}
+														}
 													}
 												],
 												"outputs": [

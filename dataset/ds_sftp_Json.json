@@ -5,12 +5,20 @@
 			"referenceName": "ls_Sftp_source",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"p_SftpFilename": {
+				"type": "string"
+			}
+		},
 		"annotations": [],
 		"type": "Json",
 		"typeProperties": {
 			"location": {
 				"type": "SftpLocation",
-				"fileName": "*.json",
+				"fileName": {
+					"value": "@dataset().p_SftpFilename",
+					"type": "Expression"
+				},
 				"folderPath": "/Inbound"
 			}
 		},
