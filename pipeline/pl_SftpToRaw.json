@@ -52,17 +52,43 @@
 					"isSequential": true,
 					"activities": [
 						{
-							"name": "Append variable1",
-							"type": "AppendVariable",
+							"name": "Copy data1",
+							"type": "Copy",
 							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
 							"userProperties": [],
 							"typeProperties": {
-								"variableName": "list_files",
-								"value": {
-									"value": "@item().name",
-									"type": "Expression"
+								"source": {
+									"type": "BinarySource",
+									"storeSettings": {
+										"type": "SftpReadSettings",
+										"recursive": true,
+										"disableChunking": false
+									},
+									"formatSettings": {
+										"type": "BinaryReadSettings"
+									}
+								},
+								"enableStaging": false
+							},
+							"inputs": [
+								{
+									"referenceName": "ds_sftp_binary_FilesMetadata",
+									"type": "DatasetReference",
+									"parameters": {
+										"p_fileName": {
+											"value": "@item().name",
+											"type": "Expression"
+										}
+									}
 								}
-							}
+							]
 						}
 					]
 				}
