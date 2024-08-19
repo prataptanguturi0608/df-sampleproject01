@@ -54,11 +54,18 @@
 						{
 							"name": "Switch2",
 							"type": "Switch",
-							"dependsOn": [],
+							"dependsOn": [
+								{
+									"activity": "FileName",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
 							"userProperties": [],
 							"typeProperties": {
 								"on": {
-									"value": "@split(item().name,'.')[1] ",
+									"value": "@split(variables('p_fileName'), '.')[1]",
 									"type": "Expression"
 								},
 								"cases": [
@@ -66,21 +73,64 @@
 										"value": "txt",
 										"activities": [
 											{
-												"name": "Set variable1",
-												"type": "SetVariable",
+												"name": "CopyTxtFile",
+												"type": "Copy",
 												"dependsOn": [],
 												"policy": {
+													"timeout": "0.12:00:00",
+													"retry": 0,
+													"retryIntervalInSeconds": 30,
 													"secureOutput": false,
 													"secureInput": false
 												},
 												"userProperties": [],
 												"typeProperties": {
-													"variableName": "p_fileName",
-													"value": {
-														"value": "\"txt\"",
-														"type": "Expression"
+													"source": {
+														"type": "DelimitedTextSource",
+														"storeSettings": {
+															"type": "SftpReadSettings",
+															"recursive": true,
+															"wildcardFileName": "*.txt",
+															"enablePartitionDiscovery": false,
+															"disableChunking": false
+														},
+														"formatSettings": {
+															"type": "DelimitedTextReadSettings"
+														}
+													},
+													"sink": {
+														"type": "DelimitedTextSink",
+														"storeSettings": {
+															"type": "AzureBlobStorageWriteSettings"
+														},
+														"formatSettings": {
+															"type": "DelimitedTextWriteSettings",
+															"quoteAllText": true,
+															"fileExtension": ".txt"
+														}
+													},
+													"enableStaging": false,
+													"translator": {
+														"type": "TabularTranslator",
+														"typeConversion": true,
+														"typeConversionSettings": {
+															"allowDataTruncation": true,
+															"treatBooleanAsNumber": false
+														}
 													}
-												}
+												},
+												"inputs": [
+													{
+														"referenceName": "ds_sftp_txt",
+														"type": "DatasetReference"
+													}
+												],
+												"outputs": [
+													{
+														"referenceName": "ds_blob_landing_Txt",
+														"type": "DatasetReference"
+													}
+												]
 											}
 										]
 									},
@@ -134,6 +184,23 @@
 										}
 									}
 								]
+							}
+						},
+						{
+							"name": "FileName",
+							"type": "SetVariable",
+							"dependsOn": [],
+							"policy": {
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "p_fileName",
+								"value": {
+									"value": "@item().name",
+									"type": "Expression"
+								}
 							}
 						}
 					]

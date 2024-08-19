@@ -1,5 +1,5 @@
 {
-	"name": "ds_sftp_csv",
+	"name": "ds_sftp_txt",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "ls_Sftp_source",
