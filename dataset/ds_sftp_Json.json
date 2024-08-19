@@ -10,7 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "SftpLocation",
-				"fileName": "*.Json",
+				"fileName": "*.json",
 				"folderPath": "/Inbound"
 			}
 		},
