@@ -135,7 +135,7 @@
 										]
 									},
 									{
-										"value": "Json",
+										"value": "json",
 										"activities": [
 											{
 												"name": "CopyJsonFiles",
@@ -190,7 +190,7 @@
 										]
 									},
 									{
-										"value": "Parquet",
+										"value": "parquet",
 										"activities": [
 											{
 												"name": "CopyParquetFiles",
