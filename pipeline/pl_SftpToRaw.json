@@ -138,18 +138,54 @@
 										"value": "Json",
 										"activities": [
 											{
-												"name": "Set variable2",
-												"type": "SetVariable",
+												"name": "Copy data1",
+												"type": "Copy",
 												"dependsOn": [],
 												"policy": {
+													"timeout": "0.12:00:00",
+													"retry": 0,
+													"retryIntervalInSeconds": 30,
 													"secureOutput": false,
 													"secureInput": false
 												},
 												"userProperties": [],
 												"typeProperties": {
-													"variableName": "p_fileName",
-													"value": "Json"
-												}
+													"source": {
+														"type": "JsonSource",
+														"storeSettings": {
+															"type": "SftpReadSettings",
+															"recursive": true,
+															"enablePartitionDiscovery": false,
+															"disableChunking": false
+														},
+														"formatSettings": {
+															"type": "JsonReadSettings"
+														}
+													},
+													"sink": {
+														"type": "JsonSink",
+														"storeSettings": {
+															"type": "AzureBlobStorageWriteSettings",
+															"copyBehavior": "PreserveHierarchy"
+														},
+														"formatSettings": {
+															"type": "JsonWriteSettings"
+														}
+													},
+													"enableStaging": false
+												},
+												"inputs": [
+													{
+														"referenceName": "ds_sftp_Json",
+														"type": "DatasetReference"
+													}
+												],
+												"outputs": [
+													{
+														"referenceName": "ds_blob_landing_Json",
+														"type": "DatasetReference"
+													}
+												]
 											}
 										]
 									},
