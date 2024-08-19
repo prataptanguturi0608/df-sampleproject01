@@ -1,5 +1,5 @@
 {
-	"name": "ds_Ablob_landing",
+	"name": "ds_Ablob_Txt_landing",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "ls_AzBlob_landing",
