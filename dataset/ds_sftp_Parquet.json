@@ -10,6 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "SftpLocation",
+				"fileName": "*.parquet",
 				"folderPath": "/Inbound"
 			},
 			"compressionCodec": "snappy"

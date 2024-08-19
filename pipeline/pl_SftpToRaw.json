@@ -138,7 +138,7 @@
 										"value": "Json",
 										"activities": [
 											{
-												"name": "Copy data1",
+												"name": "CopyJsonFiles",
 												"type": "Copy",
 												"dependsOn": [],
 												"policy": {
@@ -193,18 +193,62 @@
 										"value": "Parquet",
 										"activities": [
 											{
-												"name": "Set variable3",
-												"type": "SetVariable",
+												"name": "CopyParquetFiles",
+												"type": "Copy",
 												"dependsOn": [],
 												"policy": {
+													"timeout": "0.12:00:00",
+													"retry": 0,
+													"retryIntervalInSeconds": 30,
 													"secureOutput": false,
 													"secureInput": false
 												},
 												"userProperties": [],
 												"typeProperties": {
-													"variableName": "p_fileName",
-													"value": "Parquet"
-												}
+													"source": {
+														"type": "ParquetSource",
+														"storeSettings": {
+															"type": "SftpReadSettings",
+															"recursive": true,
+															"enablePartitionDiscovery": false,
+															"disableChunking": false
+														},
+														"formatSettings": {
+															"type": "ParquetReadSettings"
+														}
+													},
+													"sink": {
+														"type": "ParquetSink",
+														"storeSettings": {
+															"type": "AzureBlobStorageWriteSettings",
+															"copyBehavior": "PreserveHierarchy"
+														},
+														"formatSettings": {
+															"type": "ParquetWriteSettings"
+														}
+													},
+													"enableStaging": false,
+													"translator": {
+														"type": "TabularTranslator",
+														"typeConversion": true,
+														"typeConversionSettings": {
+															"allowDataTruncation": true,
+															"treatBooleanAsNumber": false
+														}
+													}
+												},
+												"inputs": [
+													{
+														"referenceName": "ds_sftp_Parquet",
+														"type": "DatasetReference"
+													}
+												],
+												"outputs": [
+													{
+														"referenceName": "ds_blob_landing_Parquet",
+														"type": "DatasetReference"
+													}
+												]
 											}
 										]
 									}
