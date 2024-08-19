@@ -4,6 +4,27 @@
 	"parameters": {
 		"factoryName": {
 			"value": "df-sampleproject01"
+		},
+		"ls_AzBlob_Archive_connectionString": {
+			"value": ""
+		},
+		"ls_AzBlob_landing_connectionString": {
+			"value": ""
+		},
+		"ls_AzDlake_accountKey": {
+			"value": ""
+		},
+		"ls_Sftp_source_password": {
+			"value": ""
+		},
+		"ls_AzDlake_properties_typeProperties_url": {
+			"value": "https://dlakeadf.dfs.core.windows.net/"
+		},
+		"ls_Sftp_source_properties_typeProperties_host": {
+			"value": "eu-central-1.sftpcloud.io"
+		},
+		"ls_Sftp_source_properties_typeProperties_userName": {
+			"value": "bbaa0299c0a54a8399c0e43956b11725"
 		}
 	}
 }
