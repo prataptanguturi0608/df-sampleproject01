@@ -24,6 +24,7 @@
 					],
 					"storeSettings": {
 						"type": "SftpReadSettings",
+						"recursive": true,
 						"enablePartitionDiscovery": false,
 						"disableChunking": false
 					},
@@ -90,7 +91,6 @@
 														"storeSettings": {
 															"type": "SftpReadSettings",
 															"recursive": true,
-															"wildcardFileName": "*.txt",
 															"enablePartitionDiscovery": false,
 															"disableChunking": false
 														},
