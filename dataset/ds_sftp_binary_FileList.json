@@ -5,6 +5,9 @@
 			"referenceName": "ls_Sftp_source",
 			"type": "LinkedServiceReference"
 		},
+		"folder": {
+			"name": "SftpToLanding"
+		},
 		"annotations": [],
 		"type": "Binary",
 		"typeProperties": {

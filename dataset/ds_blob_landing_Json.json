@@ -5,6 +5,9 @@
 			"referenceName": "ls_AzBlob_landing",
 			"type": "LinkedServiceReference"
 		},
+		"folder": {
+			"name": "SftpToLanding"
+		},
 		"annotations": [],
 		"type": "Json",
 		"typeProperties": {
