@@ -33,7 +33,7 @@
 		},
 		"ls_Sftp_source_properties_typeProperties_userName": {
 			"type": "string",
-			"defaultValue": "bbaa0299c0a54a8399c0e43956b11725"
+			"defaultValue": "7ef5b76e27f84d47a4911b18b9d57e94"
 		}
 	},
 	"variables": {
@@ -157,7 +157,7 @@
 									"userProperties": [],
 									"typeProperties": {
 										"on": {
-											"value": "@split(variables('p_fileName'), '.')[1]",
+											"value": "@split(variables('v_fileName'), '.')[1]",
 											"type": "Expression"
 										},
 										"cases": [
@@ -182,7 +182,6 @@
 																"storeSettings": {
 																	"type": "SftpReadSettings",
 																	"recursive": true,
-																	"wildcardFileName": "*.txt",
 																	"enablePartitionDiscovery": false,
 																	"disableChunking": false
 																},
@@ -193,7 +192,8 @@
 															"sink": {
 																"type": "DelimitedTextSink",
 																"storeSettings": {
-																	"type": "AzureBlobStorageWriteSettings"
+																	"type": "AzureBlobStorageWriteSettings",
+																	"copyBehavior": "PreserveHierarchy"
 																},
 																"formatSettings": {
 																	"type": "DelimitedTextWriteSettings",
@@ -215,7 +215,12 @@
 															{
 																"referenceName": "ds_sftp_txt",
 																"type": "DatasetReference",
-																"parameters": {}
+																"parameters": {
+																	"p_SftpFilename": {
+																		"value": "@variables('v_Filename')",
+																		"type": "Expression"
+																	}
+																}
 															}
 														],
 														"outputs": [
@@ -272,7 +277,12 @@
 															{
 																"referenceName": "ds_sftp_Json",
 																"type": "DatasetReference",
-																"parameters": {}
+																"parameters": {
+																	"p_SftpFilename": {
+																		"value": "@variables('v_Filename')",
+																		"type": "Expression"
+																	}
+																}
 															}
 														],
 														"outputs": [
@@ -337,7 +347,12 @@
 															{
 																"referenceName": "ds_sftp_Parquet",
 																"type": "DatasetReference",
-																"parameters": {}
+																"parameters": {
+																	"p_SftpFilename": {
+																		"value": "@variables('v_Filename')",
+																		"type": "Expression"
+																	}
+																}
 															}
 														],
 														"outputs": [
@@ -374,7 +389,7 @@
 									},
 									"userProperties": [],
 									"typeProperties": {
-										"variableName": "p_fileName",
+										"variableName": "v_Filename",
 										"value": {
 											"value": "@item().name",
 											"type": "Expression"
@@ -389,7 +404,7 @@
 					"elapsedTimeMetric": {}
 				},
 				"variables": {
-					"p_fileName": {
+					"v_Filename": {
 						"type": "String"
 					}
 				},
@@ -491,12 +506,20 @@
 					"referenceName": "ls_Sftp_source",
 					"type": "LinkedServiceReference"
 				},
+				"parameters": {
+					"p_SftpFilename": {
+						"type": "string"
+					}
+				},
 				"annotations": [],
 				"type": "Json",
 				"typeProperties": {
 					"location": {
 						"type": "SftpLocation",
-						"fileName": "*.Json",
+						"fileName": {
+							"value": "@dataset().p_SftpFilename",
+							"type": "Expression"
+						},
 						"folderPath": "/Inbound"
 					}
 				},
@@ -528,12 +551,20 @@
 					"referenceName": "ls_Sftp_source",
 					"type": "LinkedServiceReference"
 				},
+				"parameters": {
+					"p_SftpFilename": {
+						"type": "string"
+					}
+				},
 				"annotations": [],
 				"type": "Parquet",
 				"typeProperties": {
 					"location": {
 						"type": "SftpLocation",
-						"fileName": "*.parquet",
+						"fileName": {
+							"value": "@dataset().p_SftpFilename",
+							"type": "Expression"
+						},
 						"folderPath": "/Inbound"
 					},
 					"compressionCodec": "snappy"
@@ -596,12 +627,20 @@
 					"referenceName": "ls_Sftp_source",
 					"type": "LinkedServiceReference"
 				},
+				"parameters": {
+					"p_SftpFilename": {
+						"type": "string"
+					}
+				},
 				"annotations": [],
 				"type": "DelimitedText",
 				"typeProperties": {
 					"location": {
 						"type": "SftpLocation",
-						"fileName": "*.txt",
+						"fileName": {
+							"value": "@dataset().p_SftpFilename",
+							"type": "Expression"
+						},
 						"folderPath": "/Inbound"
 					},
 					"columnDelimiter": ",",

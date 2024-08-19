@@ -33,7 +33,7 @@
 		},
 		"ls_Sftp_source_properties_typeProperties_userName": {
 			"type": "string",
-			"defaultValue": "bbaa0299c0a54a8399c0e43956b11725"
+			"defaultValue": "7ef5b76e27f84d47a4911b18b9d57e94"
 		},
 		"containerUri": {
 			"type": "string",
