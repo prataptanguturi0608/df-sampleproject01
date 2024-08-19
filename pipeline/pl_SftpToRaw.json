@@ -73,9 +73,6 @@
 			}
 		],
 		"variables": {
-			"list_files": {
-				"type": "Array"
-			},
 			"p_fileName": {
 				"type": "String"
 			}
