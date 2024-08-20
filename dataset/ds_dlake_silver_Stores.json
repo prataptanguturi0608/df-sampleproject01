@@ -21,7 +21,7 @@
 		"schema": [
 			{
 				"name": "PRODUCT_ID",
-				"type": "INT32"
+				"type": "UTF8"
 			},
 			{
 				"name": "PRODUCT_NAME",
@@ -29,18 +29,14 @@
 			},
 			{
 				"name": "UNIT_PRICE",
-				"type": "DOUBLE"
-			},
-			{
-				"name": "Ingestion_by",
 				"type": "UTF8"
 			},
 			{
-				"name": "Ingestion_TimeStamp",
+				"name": "LATITUDE",
 				"type": "UTF8"
 			},
 			{
-				"name": "Ingestion_Date",
+				"name": "LONGITUDE",
 				"type": "UTF8"
 			}
 		]
