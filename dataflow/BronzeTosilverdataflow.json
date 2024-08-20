@@ -56,12 +56,24 @@
 					"name": "OrderItemsSink"
 				},
 				{
+					"dataset": {
+						"referenceName": "ds_dlake_SilverParquet",
+						"type": "DatasetReference"
+					},
 					"name": "OrdersSink"
 				},
 				{
+					"dataset": {
+						"referenceName": "ds_dlake_SilverParquet",
+						"type": "DatasetReference"
+					},
 					"name": "ProductsSink"
 				},
 				{
+					"dataset": {
+						"referenceName": "ds_dlake_SilverParquet",
+						"type": "DatasetReference"
+					},
 					"name": "StoresSink"
 				}
 			],
@@ -330,25 +342,52 @@
 				"     skipDuplicateMapOutputs: true) ~> OrderItemsSink",
 				"select3 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true,",
+				"     input(",
+				"          CUSTOMER_ID as integer,",
+				"          FULL_NAME as string,",
+				"          EMAIL_ADDRESS as string,",
+				"          Ingestion_by as string,",
+				"          Ingestion_Date as string,",
+				"          Ingestion_TimeStamp as string",
+				"     ),",
 				"     format: 'parquet',",
+				"     umask: 0022,",
 				"     preCommands: [],",
-				"     postCommands: []) ~> OrdersSink",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> OrdersSink",
 				"select4 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true,",
+				"     input(",
+				"          CUSTOMER_ID as integer,",
+				"          FULL_NAME as string,",
+				"          EMAIL_ADDRESS as string,",
+				"          Ingestion_by as string,",
+				"          Ingestion_Date as string,",
+				"          Ingestion_TimeStamp as string",
+				"     ),",
 				"     format: 'parquet',",
+				"     umask: 0022,",
 				"     preCommands: [],",
-				"     postCommands: []) ~> ProductsSink",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> ProductsSink",
 				"select5 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true,",
+				"     input(",
+				"          CUSTOMER_ID as integer,",
+				"          FULL_NAME as string,",
+				"          EMAIL_ADDRESS as string,",
+				"          Ingestion_by as string,",
+				"          Ingestion_Date as string,",
+				"          Ingestion_TimeStamp as string",
+				"     ),",
 				"     format: 'parquet',",
+				"     umask: 0022,",
 				"     preCommands: [],",
-				"     postCommands: []) ~> StoresSink"
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> StoresSink"
 			]
 		}
 	}
