@@ -182,6 +182,29 @@
 												"typeProperties": {
 													"source": {
 														"type": "JsonSource",
+														"additionalColumns": [
+															{
+																"name": "IngestionBy",
+																"value": {
+																	"value": "'pratap'",
+																	"type": "Expression"
+																}
+															},
+															{
+																"name": "IngestionTimestamp",
+																"value": {
+																	"value": "@utcNow()",
+																	"type": "Expression"
+																}
+															},
+															{
+																"name": "IngestionDate",
+																"value": {
+																	"value": "@formatDateTime(utcNow(),'yyyy/MM/dd')",
+																	"type": "Expression"
+																}
+															}
+														],
 														"storeSettings": {
 															"type": "SftpReadSettings",
 															"recursive": true,
@@ -243,6 +266,29 @@
 												"typeProperties": {
 													"source": {
 														"type": "ParquetSource",
+														"additionalColumns": [
+															{
+																"name": "IngestionBy",
+																"value": {
+																	"value": "'pratap'",
+																	"type": "Expression"
+																}
+															},
+															{
+																"name": "IngestionTimestamp",
+																"value": {
+																	"value": "@utcNow()",
+																	"type": "Expression"
+																}
+															},
+															{
+																"name": "IngestionDate",
+																"value": {
+																	"value": "@formatDateTime(utcNow(),'yyyy/MM/dd')",
+																	"type": "Expression"
+																}
+															}
+														],
 														"storeSettings": {
 															"type": "SftpReadSettings",
 															"recursive": true,
