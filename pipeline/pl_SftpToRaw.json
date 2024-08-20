@@ -122,7 +122,7 @@
 														"referenceName": "ds_sftp_txt",
 														"type": "DatasetReference",
 														"parameters": {
-															"p_SftpFilename": {
+															"p_SourceFilename": {
 																"value": "@variables('v_Filename')",
 																"type": "Expression"
 															}
@@ -132,17 +132,7 @@
 												"outputs": [
 													{
 														"referenceName": "ds_dlake_bronze_Parquet",
-														"type": "DatasetReference",
-														"parameters": {
-															"p_filename": {
-																"value": "@variables('v_Filename')",
-																"type": "Expression"
-															},
-															"p_folderName": {
-																"value": "@split(variables('v_Filename'), '.')[0]",
-																"type": "Expression"
-															}
-														}
+														"type": "DatasetReference"
 													}
 												]
 											}
@@ -192,7 +182,7 @@
 														"referenceName": "ds_sftp_Json",
 														"type": "DatasetReference",
 														"parameters": {
-															"p_SftpFilename": {
+															"p_SourceFilename": {
 																"value": "@variables('v_Filename')",
 																"type": "Expression"
 															}
@@ -270,7 +260,7 @@
 														"referenceName": "ds_sftp_Parquet",
 														"type": "DatasetReference",
 														"parameters": {
-															"p_SftpFilename": {
+															"p_SourceFilename": {
 																"value": "@variables('v_Filename')",
 																"type": "Expression"
 															}
