@@ -26,31 +26,6 @@
 			},
 			"compressionCodec": "snappy"
 		},
-		"schema": [
-			{
-				"name": "CUSTOMER_ID",
-				"type": "INT32"
-			},
-			{
-				"name": "FULL_NAME",
-				"type": "UTF8"
-			},
-			{
-				"name": "EMAIL_ADDRESS",
-				"type": "UTF8"
-			},
-			{
-				"name": "Ingestion_by",
-				"type": "UTF8"
-			},
-			{
-				"name": "Ingestion_Date",
-				"type": "UTF8"
-			},
-			{
-				"name": "Ingestion_TimeStamp",
-				"type": "UTF8"
-			}
-		]
+		"schema": []
 	}
 }
