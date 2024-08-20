@@ -1,17 +1,6 @@
 {
 	"name": "pl_RawToCleansed",
 	"properties": {
-		"activities": [
-			{
-				"name": "Wait1",
-				"type": "Wait",
-				"dependsOn": [],
-				"userProperties": [],
-				"typeProperties": {
-					"waitTimeInSeconds": 1
-				}
-			}
-		],
 		"variables": {
 			"v_filename": {
 				"type": "String"
