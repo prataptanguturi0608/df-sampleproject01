@@ -59,9 +59,6 @@
 				},
 				{
 					"name": "select3"
-				},
-				{
-					"name": "join4"
 				}
 			],
 			"scriptLines": [
@@ -197,12 +194,7 @@
 				"          EMAIL_ADDRESS",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> select3",
-				"select3, Stores join(STORE_ID == ERROR_FUNCTION(''),",
-				"     joinType:'left',",
-				"     matchType:'exact',",
-				"     ignoreSpaces: false,",
-				"     broadcast: 'auto')~> join4"
+				"     skipDuplicateMapOutputs: true) ~> select3"
 			]
 		}
 	}
