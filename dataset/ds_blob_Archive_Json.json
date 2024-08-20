@@ -1,0 +1,47 @@
+{
+	"name": "ds_blob_Archive_Json",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_AzBlob_Archive",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "ds_SFTP to Archive"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"folderPath": {
+					"value": "@formatDateTime(utcNow(),'yyyy/MM/dd')",
+					"type": "Expression"
+				},
+				"container": "archive"
+			}
+		},
+		"schema": {
+			"type": "object",
+			"properties": {
+				"CUSTOMER_ID": {
+					"type": "string"
+				},
+				"FULL_NAME": {
+					"type": "string"
+				},
+				"EMAIL_ADDRESS": {
+					"type": "string"
+				},
+				"Ingestion_by": {
+					"type": "string"
+				},
+				"Ingestion_TimeStamp": {
+					"type": "string"
+				},
+				"Ingestion_Date": {
+					"type": "string"
+				}
+			}
+		}
+	}
+}
