@@ -5,6 +5,9 @@
 		"factoryName": {
 			"value": "df-sampleproject01"
 		},
+		"ls_Activitylog_connectionString": {
+			"value": ""
+		},
 		"ls_AzBlob_Archive_connectionString": {
 			"value": ""
 		},

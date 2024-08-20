@@ -7,6 +7,10 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "df-sampleproject01"
 		},
+		"ls_Activitylog_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'ls_Activitylog'"
+		},
 		"ls_AzBlob_Archive_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'ls_AzBlob_Archive'"
@@ -59,30 +63,21 @@
 				"policy": {
 					"elapsedTimeMetric": {}
 				},
-				"annotations": []
+				"annotations": [],
+				"lastPublishTime": "2024-08-19T14:19:00Z"
 			},
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/pl_RawToCleansed')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
+			"name": "[concat(parameters('factoryName'), '/ls_Activitylog')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
 			"properties": {
-				"activities": [
-					{
-						"name": "Wait1",
-						"type": "Wait",
-						"dependsOn": [],
-						"userProperties": [],
-						"typeProperties": {
-							"waitTimeInSeconds": 1
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {}
-				},
-				"annotations": []
+				"annotations": [],
+				"type": "AzureBlobStorage",
+				"typeProperties": {
+					"connectionString": "[parameters('ls_Activitylog_connectionString')]"
+				}
 			},
 			"dependsOn": []
 		},
@@ -151,70 +146,143 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/ds_blob_landing_Json')]",
+			"name": "[concat(parameters('factoryName'), '/ds_blob_Archive_Json')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "ls_AzBlob_landing",
+					"referenceName": "ls_AzBlob_Archive",
 					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "ds_SFTP to Archive"
 				},
 				"annotations": [],
 				"type": "Json",
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobStorageLocation",
-						"folderPath": "customerorders",
-						"container": "landing"
+						"folderPath": {
+							"value": "@formatDateTime(utcNow(),'yyyy/MM/dd')",
+							"type": "Expression"
+						},
+						"container": "archive"
 					}
 				},
-				"schema": {}
+				"schema": {
+					"type": "object",
+					"properties": {
+						"CUSTOMER_ID": {
+							"type": "string"
+						},
+						"FULL_NAME": {
+							"type": "string"
+						},
+						"EMAIL_ADDRESS": {
+							"type": "string"
+						},
+						"Ingestion_by": {
+							"type": "string"
+						},
+						"Ingestion_TimeStamp": {
+							"type": "string"
+						},
+						"Ingestion_Date": {
+							"type": "string"
+						}
+					}
+				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/ls_AzBlob_landing')]"
+				"[concat(variables('factoryId'), '/linkedServices/ls_AzBlob_Archive')]"
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/ds_blob_landing_Parquet')]",
+			"name": "[concat(parameters('factoryName'), '/ds_blob_Archive_Parquet')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "ls_AzBlob_landing",
+					"referenceName": "ls_AzBlob_Archive",
 					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "ds_SFTP to Archive"
 				},
 				"annotations": [],
 				"type": "Parquet",
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobStorageLocation",
-						"folderPath": "customerorders",
-						"container": "landing"
+						"folderPath": {
+							"value": "@formatDateTime(utcNow(),'yyyy/MM/dd')",
+							"type": "Expression"
+						},
+						"container": "archive"
 					},
 					"compressionCodec": "snappy"
 				},
-				"schema": []
+				"schema": [
+					{
+						"name": "ORDER_ID",
+						"type": "UTF8"
+					},
+					{
+						"name": "ORDER_DATETIME",
+						"type": "UTF8"
+					},
+					{
+						"name": "CUSTOMER_ID",
+						"type": "UTF8"
+					},
+					{
+						"name": "ORDER_STATUS",
+						"type": "UTF8"
+					},
+					{
+						"name": "STORE_ID",
+						"type": "UTF8"
+					},
+					{
+						"name": "Ingestion_by",
+						"type": "UTF8"
+					},
+					{
+						"name": "Ingestion_TimeStamp",
+						"type": "UTF8"
+					},
+					{
+						"name": "Ingestion_Date",
+						"type": "UTF8"
+					}
+				]
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/ls_AzBlob_landing')]"
+				"[concat(variables('factoryId'), '/linkedServices/ls_AzBlob_Archive')]"
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/ds_blob_landing_Txt')]",
+			"name": "[concat(parameters('factoryName'), '/ds_blob_Archive_text')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "ls_AzBlob_landing",
+					"referenceName": "ls_AzBlob_Archive",
 					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "ds_SFTP to Archive"
 				},
 				"annotations": [],
 				"type": "DelimitedText",
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobStorageLocation",
-						"folderPath": "customerorders",
-						"container": "landing"
+						"folderPath": {
+							"value": "@formatDateTime(utcNow(),'yyyy/MM/dd')",
+							"type": "Expression"
+						},
+						"container": "archive"
 					},
 					"columnDelimiter": ",",
 					"escapeChar": "\\",
@@ -224,7 +292,478 @@
 				"schema": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/ls_AzBlob_landing')]"
+				"[concat(variables('factoryId'), '/linkedServices/ls_AzBlob_Archive')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ds_dlake_bronze_Json')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ls_AzDlake",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "ds_SFTP to Bronze"
+				},
+				"annotations": [],
+				"type": "Json",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"folderPath": "customerorders",
+						"fileSystem": "bronze"
+					}
+				},
+				"schema": {
+					"type": "object",
+					"properties": {
+						"CUSTOMER_ID": {
+							"type": "string"
+						},
+						"FULL_NAME": {
+							"type": "string"
+						},
+						"EMAIL_ADDRESS": {
+							"type": "string"
+						},
+						"Ingestion_by": {
+							"type": "string"
+						},
+						"Ingestion_TimeStamp": {
+							"type": "string"
+						},
+						"Ingestion_Date": {
+							"type": "string"
+						}
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ls_AzDlake')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ds_dlake_bronze_Parquet')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ls_AzDlake",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "ds_SFTP to Bronze"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"folderPath": "customerorders",
+						"fileSystem": "bronze"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": [
+					{
+						"name": "ORDER_ID",
+						"type": "UTF8"
+					},
+					{
+						"name": "ORDER_DATETIME",
+						"type": "UTF8"
+					},
+					{
+						"name": "CUSTOMER_ID",
+						"type": "UTF8"
+					},
+					{
+						"name": "ORDER_STATUS",
+						"type": "UTF8"
+					},
+					{
+						"name": "STORE_ID",
+						"type": "UTF8"
+					},
+					{
+						"name": "Ingestion_by",
+						"type": "UTF8"
+					},
+					{
+						"name": "Ingestion_TimeStamp",
+						"type": "UTF8"
+					},
+					{
+						"name": "Ingestion_Date",
+						"type": "UTF8"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ls_AzDlake')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ds_dlake_bronze_customers')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ls_AzDlake",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "ds_BronzetoSilver"
+				},
+				"annotations": [],
+				"type": "Json",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "customers.json",
+						"folderPath": "customerorders",
+						"fileSystem": "bronze"
+					}
+				},
+				"schema": {
+					"type": "object",
+					"properties": {
+						"CUSTOMER_ID": {
+							"type": "string"
+						},
+						"FULL_NAME": {
+							"type": "string"
+						},
+						"EMAIL_ADDRESS": {
+							"type": "string"
+						},
+						"Ingestion_by": {
+							"type": "string"
+						},
+						"Ingestion_TimeStamp": {
+							"type": "string"
+						},
+						"Ingestion_Date": {
+							"type": "string"
+						}
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ls_AzDlake')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ds_dlake_bronze_order_items')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ls_AzDlake",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "ds_BronzetoSilver"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "order_items.txt",
+						"folderPath": "customerorders",
+						"fileSystem": "bronze"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "ORDER_ID",
+						"type": "String"
+					},
+					{
+						"name": "LINE_ITEM_ID",
+						"type": "String"
+					},
+					{
+						"name": "PRODUCT_ID",
+						"type": "String"
+					},
+					{
+						"name": "UNIT_PRICE",
+						"type": "String"
+					},
+					{
+						"name": "QUANTITY",
+						"type": "String"
+					},
+					{
+						"name": "Ingestion_by",
+						"type": "String"
+					},
+					{
+						"name": "Ingestion_TimeStamp",
+						"type": "String"
+					},
+					{
+						"name": "Ingestion_Date",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ls_AzDlake')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ds_dlake_bronze_orders')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ls_AzDlake",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "ds_BronzetoSilver"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "orders.parquet",
+						"folderPath": "customerorders",
+						"fileSystem": "bronze"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": [
+					{
+						"name": "ORDER_ID",
+						"type": "UTF8"
+					},
+					{
+						"name": "ORDER_DATETIME",
+						"type": "UTF8"
+					},
+					{
+						"name": "CUSTOMER_ID",
+						"type": "UTF8"
+					},
+					{
+						"name": "ORDER_STATUS",
+						"type": "UTF8"
+					},
+					{
+						"name": "STORE_ID",
+						"type": "UTF8"
+					},
+					{
+						"name": "Ingestion_by",
+						"type": "UTF8"
+					},
+					{
+						"name": "Ingestion_TimeStamp",
+						"type": "UTF8"
+					},
+					{
+						"name": "Ingestion_Date",
+						"type": "UTF8"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ls_AzDlake')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ds_dlake_bronze_products')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ls_AzDlake",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "ds_BronzetoSilver"
+				},
+				"annotations": [],
+				"type": "Json",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "products.json",
+						"folderPath": "customerorders",
+						"fileSystem": "bronze"
+					}
+				},
+				"schema": {
+					"type": "object",
+					"properties": {
+						"PRODUCT_ID": {
+							"type": "string"
+						},
+						"PRODUCT_NAME": {
+							"type": "string"
+						},
+						"UNIT_PRICE": {
+							"type": "string"
+						},
+						"Ingestion_by": {
+							"type": "string"
+						},
+						"Ingestion_TimeStamp": {
+							"type": "string"
+						},
+						"Ingestion_Date": {
+							"type": "string"
+						}
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ls_AzDlake')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ds_dlake_bronze_stores')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ls_AzDlake",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "ds_BronzetoSilver"
+				},
+				"annotations": [],
+				"type": "Json",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "stores.json",
+						"folderPath": "customerorders",
+						"fileSystem": "bronze"
+					}
+				},
+				"schema": {
+					"type": "object",
+					"properties": {
+						"PRODUCT_ID": {
+							"type": "string"
+						},
+						"PRODUCT_NAME": {
+							"type": "string"
+						},
+						"UNIT_PRICE": {
+							"type": "string"
+						},
+						"Ingestion_by": {
+							"type": "string"
+						},
+						"Ingestion_TimeStamp": {
+							"type": "string"
+						},
+						"Ingestion_Date": {
+							"type": "string"
+						}
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ls_AzDlake')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ds_dlake_bronze_txt')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ls_AzDlake",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "ds_SFTP to Bronze"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"folderPath": "customerorders",
+						"fileSystem": "bronze"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ls_AzDlake')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ds_dlake_silver_Parquet')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ls_AzDlake",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "ds_BronzetoSilver"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"folderPath": "customerorders/customers",
+						"fileSystem": "silver"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": [
+					{
+						"name": "CUSTOMER_ID",
+						"type": "INT32"
+					},
+					{
+						"name": "FULL_NAME",
+						"type": "UTF8"
+					},
+					{
+						"name": "EMAIL_ADDRESS",
+						"type": "UTF8"
+					},
+					{
+						"name": "Ingestion_by",
+						"type": "UTF8"
+					},
+					{
+						"name": "Ingestion_TimeStamp",
+						"type": "UTF8"
+					},
+					{
+						"name": "Ingestion_Date",
+						"type": "UTF8"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ls_AzDlake')]"
 			]
 		},
 		{
@@ -237,9 +776,12 @@
 					"type": "LinkedServiceReference"
 				},
 				"parameters": {
-					"p_SftpFilename": {
+					"p_SourceFilename": {
 						"type": "string"
 					}
+				},
+				"folder": {
+					"name": "ds_SFTP to Bronze"
 				},
 				"annotations": [],
 				"type": "Json",
@@ -247,7 +789,7 @@
 					"location": {
 						"type": "SftpLocation",
 						"fileName": {
-							"value": "@dataset().p_SftpFilename",
+							"value": "@dataset().p_SourceFilename",
 							"type": "Expression"
 						},
 						"folderPath": "/Inbound"
@@ -282,9 +824,12 @@
 					"type": "LinkedServiceReference"
 				},
 				"parameters": {
-					"p_SftpFilename": {
+					"p_SourceFilename": {
 						"type": "string"
 					}
+				},
+				"folder": {
+					"name": "ds_SFTP to Bronze"
 				},
 				"annotations": [],
 				"type": "Parquet",
@@ -292,7 +837,7 @@
 					"location": {
 						"type": "SftpLocation",
 						"fileName": {
-							"value": "@dataset().p_SftpFilename",
+							"value": "@dataset().p_SourceFilename",
 							"type": "Expression"
 						},
 						"folderPath": "/Inbound"
@@ -324,398 +869,6 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/ls_Sftp_source')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/ds_sftp_binary_FileList')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "ls_Sftp_source",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "Binary",
-				"typeProperties": {
-					"location": {
-						"type": "SftpLocation",
-						"folderPath": "/Inbound"
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/ls_Sftp_source')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/ds_sftp_txt')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "ls_Sftp_source",
-					"type": "LinkedServiceReference"
-				},
-				"parameters": {
-					"p_SftpFilename": {
-						"type": "string"
-					}
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "SftpLocation",
-						"fileName": {
-							"value": "@dataset().p_SftpFilename",
-							"type": "Expression"
-						},
-						"folderPath": "/Inbound"
-					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/ls_Sftp_source')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/pl_SftpToRaw')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "SFTP_FileList",
-						"type": "GetMetadata",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataset": {
-								"referenceName": "ds_sftp_binary_FileList",
-								"type": "DatasetReference",
-								"parameters": {}
-							},
-							"fieldList": [
-								"childItems"
-							],
-							"storeSettings": {
-								"type": "SftpReadSettings",
-								"recursive": true,
-								"enablePartitionDiscovery": false,
-								"disableChunking": false
-							},
-							"formatSettings": {
-								"type": "BinaryReadSettings"
-							}
-						}
-					},
-					{
-						"name": "ForEach1",
-						"type": "ForEach",
-						"dependsOn": [
-							{
-								"activity": "SFTP_FileList",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"items": {
-								"value": "@activity('SFTP_FileList').output.childItems",
-								"type": "Expression"
-							},
-							"isSequential": true,
-							"activities": [
-								{
-									"name": "Switch2",
-									"type": "Switch",
-									"dependsOn": [
-										{
-											"activity": "FileName",
-											"dependencyConditions": [
-												"Succeeded"
-											]
-										}
-									],
-									"userProperties": [],
-									"typeProperties": {
-										"on": {
-											"value": "@split(variables('v_fileName'), '.')[1]",
-											"type": "Expression"
-										},
-										"cases": [
-											{
-												"value": "txt",
-												"activities": [
-													{
-														"name": "CopyTxtFile",
-														"type": "Copy",
-														"dependsOn": [],
-														"policy": {
-															"timeout": "0.12:00:00",
-															"retry": 0,
-															"retryIntervalInSeconds": 30,
-															"secureOutput": false,
-															"secureInput": false
-														},
-														"userProperties": [],
-														"typeProperties": {
-															"source": {
-																"type": "DelimitedTextSource",
-																"storeSettings": {
-																	"type": "SftpReadSettings",
-																	"recursive": true,
-																	"enablePartitionDiscovery": false,
-																	"disableChunking": false
-																},
-																"formatSettings": {
-																	"type": "DelimitedTextReadSettings"
-																}
-															},
-															"sink": {
-																"type": "DelimitedTextSink",
-																"storeSettings": {
-																	"type": "AzureBlobStorageWriteSettings",
-																	"copyBehavior": "PreserveHierarchy"
-																},
-																"formatSettings": {
-																	"type": "DelimitedTextWriteSettings",
-																	"quoteAllText": true,
-																	"fileExtension": ".txt"
-																}
-															},
-															"enableStaging": false,
-															"translator": {
-																"type": "TabularTranslator",
-																"typeConversion": true,
-																"typeConversionSettings": {
-																	"allowDataTruncation": true,
-																	"treatBooleanAsNumber": false
-																}
-															}
-														},
-														"inputs": [
-															{
-																"referenceName": "ds_sftp_txt",
-																"type": "DatasetReference",
-																"parameters": {
-																	"p_SftpFilename": {
-																		"value": "@variables('v_Filename')",
-																		"type": "Expression"
-																	}
-																}
-															}
-														],
-														"outputs": [
-															{
-																"referenceName": "ds_blob_landing_Txt",
-																"type": "DatasetReference",
-																"parameters": {}
-															}
-														]
-													}
-												]
-											},
-											{
-												"value": "json",
-												"activities": [
-													{
-														"name": "CopyJsonFiles",
-														"type": "Copy",
-														"dependsOn": [],
-														"policy": {
-															"timeout": "0.12:00:00",
-															"retry": 0,
-															"retryIntervalInSeconds": 30,
-															"secureOutput": false,
-															"secureInput": false
-														},
-														"userProperties": [],
-														"typeProperties": {
-															"source": {
-																"type": "JsonSource",
-																"storeSettings": {
-																	"type": "SftpReadSettings",
-																	"recursive": true,
-																	"enablePartitionDiscovery": false,
-																	"disableChunking": false
-																},
-																"formatSettings": {
-																	"type": "JsonReadSettings"
-																}
-															},
-															"sink": {
-																"type": "JsonSink",
-																"storeSettings": {
-																	"type": "AzureBlobStorageWriteSettings",
-																	"copyBehavior": "PreserveHierarchy"
-																},
-																"formatSettings": {
-																	"type": "JsonWriteSettings"
-																}
-															},
-															"enableStaging": false
-														},
-														"inputs": [
-															{
-																"referenceName": "ds_sftp_Json",
-																"type": "DatasetReference",
-																"parameters": {
-																	"p_SftpFilename": {
-																		"value": "@variables('v_Filename')",
-																		"type": "Expression"
-																	}
-																}
-															}
-														],
-														"outputs": [
-															{
-																"referenceName": "ds_blob_landing_Json",
-																"type": "DatasetReference",
-																"parameters": {}
-															}
-														]
-													}
-												]
-											},
-											{
-												"value": "parquet",
-												"activities": [
-													{
-														"name": "CopyParquetFiles",
-														"type": "Copy",
-														"dependsOn": [],
-														"policy": {
-															"timeout": "0.12:00:00",
-															"retry": 0,
-															"retryIntervalInSeconds": 30,
-															"secureOutput": false,
-															"secureInput": false
-														},
-														"userProperties": [],
-														"typeProperties": {
-															"source": {
-																"type": "ParquetSource",
-																"storeSettings": {
-																	"type": "SftpReadSettings",
-																	"recursive": true,
-																	"enablePartitionDiscovery": false,
-																	"disableChunking": false
-																},
-																"formatSettings": {
-																	"type": "ParquetReadSettings"
-																}
-															},
-															"sink": {
-																"type": "ParquetSink",
-																"storeSettings": {
-																	"type": "AzureBlobStorageWriteSettings",
-																	"copyBehavior": "PreserveHierarchy"
-																},
-																"formatSettings": {
-																	"type": "ParquetWriteSettings"
-																}
-															},
-															"enableStaging": false,
-															"translator": {
-																"type": "TabularTranslator",
-																"typeConversion": true,
-																"typeConversionSettings": {
-																	"allowDataTruncation": true,
-																	"treatBooleanAsNumber": false
-																}
-															}
-														},
-														"inputs": [
-															{
-																"referenceName": "ds_sftp_Parquet",
-																"type": "DatasetReference",
-																"parameters": {
-																	"p_SftpFilename": {
-																		"value": "@variables('v_Filename')",
-																		"type": "Expression"
-																	}
-																}
-															}
-														],
-														"outputs": [
-															{
-																"referenceName": "ds_blob_landing_Parquet",
-																"type": "DatasetReference",
-																"parameters": {}
-															}
-														]
-													}
-												]
-											}
-										],
-										"defaultActivities": [
-											{
-												"name": "Wait1",
-												"type": "Wait",
-												"dependsOn": [],
-												"userProperties": [],
-												"typeProperties": {
-													"waitTimeInSeconds": 1
-												}
-											}
-										]
-									}
-								},
-								{
-									"name": "FileName",
-									"type": "SetVariable",
-									"dependsOn": [],
-									"policy": {
-										"secureOutput": false,
-										"secureInput": false
-									},
-									"userProperties": [],
-									"typeProperties": {
-										"variableName": "v_Filename",
-										"value": {
-											"value": "@item().name",
-											"type": "Expression"
-										}
-									}
-								}
-							]
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {}
-				},
-				"variables": {
-					"v_Filename": {
-						"type": "String"
-					}
-				},
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/ds_sftp_binary_FileList')]",
-				"[concat(variables('factoryId'), '/datasets/ds_sftp_txt')]",
-				"[concat(variables('factoryId'), '/datasets/ds_blob_landing_Txt')]",
-				"[concat(variables('factoryId'), '/datasets/ds_sftp_Json')]",
-				"[concat(variables('factoryId'), '/datasets/ds_blob_landing_Json')]",
-				"[concat(variables('factoryId'), '/datasets/ds_sftp_Parquet')]",
-				"[concat(variables('factoryId'), '/datasets/ds_blob_landing_Parquet')]"
 			]
 		}
 	]

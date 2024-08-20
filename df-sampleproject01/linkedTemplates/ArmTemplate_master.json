@@ -7,6 +7,10 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "df-sampleproject01"
 		},
+		"ls_Activitylog_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'ls_Activitylog'"
+		},
 		"ls_AzBlob_Archive_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'ls_AzBlob_Archive'"
@@ -62,6 +66,9 @@
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
 					},
+					"ls_Activitylog_connectionString": {
+						"value": "[parameters('ls_Activitylog_connectionString')]"
+					},
 					"ls_AzBlob_Archive_connectionString": {
 						"value": "[parameters('ls_AzBlob_Archive_connectionString')]"
 					},
@@ -86,6 +93,26 @@
 				}
 			},
 			"dependsOn": []
+		},
+		{
+			"name": "df-sampleproject01_ArmTemplate_1",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_1.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'df-sampleproject01_ArmTemplate_0')]"
+			]
 		}
 	]
 }
