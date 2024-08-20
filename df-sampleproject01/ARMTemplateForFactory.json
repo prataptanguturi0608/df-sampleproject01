@@ -97,11 +97,36 @@
 									"OrdersData": {},
 									"ProductsData": {},
 									"StoresData": {},
-									"CustomersDataSink": {},
-									"OrderItemsSink": {},
-									"OrdersSink": {},
-									"ProductsSink": {},
-									"StoresSink": {}
+									"CustomersDataSink": {
+										"p_foldername": {
+											"value": "'Customers'",
+											"type": "Expression"
+										}
+									},
+									"OrderItemsSink": {
+										"p_foldername": {
+											"value": "'OrderItems'",
+											"type": "Expression"
+										}
+									},
+									"OrdersSink": {
+										"p_foldername": {
+											"value": "'Orders'",
+											"type": "Expression"
+										}
+									},
+									"ProductsSink": {
+										"p_foldername": {
+											"value": "'Products'",
+											"type": "Expression"
+										}
+									},
+									"StoresSink": {
+										"p_foldername": {
+											"value": "'Stores'",
+											"type": "Expression"
+										}
+									}
 								}
 							},
 							"staging": {},
@@ -115,11 +140,6 @@
 				],
 				"policy": {
 					"elapsedTimeMetric": {}
-				},
-				"variables": {
-					"v_filename": {
-						"type": "String"
-					}
 				},
 				"annotations": [],
 				"lastPublishTime": "2024-08-19T14:19:00Z"
@@ -1060,6 +1080,67 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/ds_dlake_SilverParquet')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ls_AzDlake",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"p_foldername": {
+						"type": "String"
+					}
+				},
+				"folder": {
+					"name": "ds_BronzetoSilver"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"folderPath": {
+							"value": "@concat('CustomerOrders',dataset().p_foldername)",
+							"type": "Expression"
+						},
+						"fileSystem": "silver"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": [
+					{
+						"name": "CUSTOMER_ID",
+						"type": "INT32"
+					},
+					{
+						"name": "FULL_NAME",
+						"type": "UTF8"
+					},
+					{
+						"name": "EMAIL_ADDRESS",
+						"type": "UTF8"
+					},
+					{
+						"name": "Ingestion_by",
+						"type": "UTF8"
+					},
+					{
+						"name": "Ingestion_Date",
+						"type": "UTF8"
+					},
+					{
+						"name": "Ingestion_TimeStamp",
+						"type": "UTF8"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ls_AzDlake')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/ds_dlake_bronze_Json')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -1478,59 +1559,6 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/ds_dlake_silver_Parquet')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "ls_AzDlake",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "ds_BronzetoSilver"
-				},
-				"annotations": [],
-				"type": "Parquet",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"folderPath": "customerorders/customers",
-						"fileSystem": "silver"
-					},
-					"compressionCodec": "snappy"
-				},
-				"schema": [
-					{
-						"name": "CUSTOMER_ID",
-						"type": "INT32"
-					},
-					{
-						"name": "FULL_NAME",
-						"type": "UTF8"
-					},
-					{
-						"name": "EMAIL_ADDRESS",
-						"type": "UTF8"
-					},
-					{
-						"name": "Ingestion_by",
-						"type": "UTF8"
-					},
-					{
-						"name": "Ingestion_TimeStamp",
-						"type": "UTF8"
-					},
-					{
-						"name": "Ingestion_Date",
-						"type": "UTF8"
-					}
-				]
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/ls_AzDlake')]"
-			]
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/ds_sftp_Json')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -1823,35 +1851,35 @@
 					"sinks": [
 						{
 							"dataset": {
-								"referenceName": "ds_dlake_silver_Parquet",
+								"referenceName": "ds_dlake_SilverParquet",
 								"type": "DatasetReference"
 							},
 							"name": "CustomersDataSink"
 						},
 						{
 							"dataset": {
-								"referenceName": "ds_dlake_silver_Parquet",
+								"referenceName": "ds_dlake_SilverParquet",
 								"type": "DatasetReference"
 							},
 							"name": "OrderItemsSink"
 						},
 						{
 							"dataset": {
-								"referenceName": "ds_dlake_silver_Parquet",
+								"referenceName": "ds_dlake_SilverParquet",
 								"type": "DatasetReference"
 							},
 							"name": "OrdersSink"
 						},
 						{
 							"dataset": {
-								"referenceName": "ds_dlake_silver_Parquet",
+								"referenceName": "ds_dlake_SilverParquet",
 								"type": "DatasetReference"
 							},
 							"name": "ProductsSink"
 						},
 						{
 							"dataset": {
-								"referenceName": "ds_dlake_silver_Parquet",
+								"referenceName": "ds_dlake_SilverParquet",
 								"type": "DatasetReference"
 							},
 							"name": "StoresSink"
@@ -2095,8 +2123,8 @@
 						"          FULL_NAME as string,",
 						"          EMAIL_ADDRESS as string,",
 						"          Ingestion_by as string,",
-						"          Ingestion_TimeStamp as string,",
-						"          Ingestion_Date as string",
+						"          Ingestion_Date as string,",
+						"          Ingestion_TimeStamp as string",
 						"     ),",
 						"     format: 'parquet',",
 						"     umask: 0022,",
@@ -2111,8 +2139,8 @@
 						"          FULL_NAME as string,",
 						"          EMAIL_ADDRESS as string,",
 						"          Ingestion_by as string,",
-						"          Ingestion_TimeStamp as string,",
-						"          Ingestion_Date as string",
+						"          Ingestion_Date as string,",
+						"          Ingestion_TimeStamp as string",
 						"     ),",
 						"     format: 'parquet',",
 						"     umask: 0022,",
@@ -2127,8 +2155,8 @@
 						"          FULL_NAME as string,",
 						"          EMAIL_ADDRESS as string,",
 						"          Ingestion_by as string,",
-						"          Ingestion_TimeStamp as string,",
-						"          Ingestion_Date as string",
+						"          Ingestion_Date as string,",
+						"          Ingestion_TimeStamp as string",
 						"     ),",
 						"     format: 'parquet',",
 						"     umask: 0022,",
@@ -2143,8 +2171,8 @@
 						"          FULL_NAME as string,",
 						"          EMAIL_ADDRESS as string,",
 						"          Ingestion_by as string,",
-						"          Ingestion_TimeStamp as string,",
-						"          Ingestion_Date as string",
+						"          Ingestion_Date as string,",
+						"          Ingestion_TimeStamp as string",
 						"     ),",
 						"     format: 'parquet',",
 						"     umask: 0022,",
@@ -2159,8 +2187,8 @@
 						"          FULL_NAME as string,",
 						"          EMAIL_ADDRESS as string,",
 						"          Ingestion_by as string,",
-						"          Ingestion_TimeStamp as string,",
-						"          Ingestion_Date as string",
+						"          Ingestion_Date as string,",
+						"          Ingestion_TimeStamp as string",
 						"     ),",
 						"     format: 'parquet',",
 						"     umask: 0022,",
@@ -2177,7 +2205,7 @@
 				"[concat(variables('factoryId'), '/datasets/ds_dlake_bronze_orders')]",
 				"[concat(variables('factoryId'), '/datasets/ds_dlake_bronze_products')]",
 				"[concat(variables('factoryId'), '/datasets/ds_dlake_bronze_stores')]",
-				"[concat(variables('factoryId'), '/datasets/ds_dlake_silver_Parquet')]"
+				"[concat(variables('factoryId'), '/datasets/ds_dlake_SilverParquet')]"
 			]
 		}
 	]

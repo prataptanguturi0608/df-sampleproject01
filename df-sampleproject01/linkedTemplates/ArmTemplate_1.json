@@ -119,35 +119,35 @@
 					"sinks": [
 						{
 							"dataset": {
-								"referenceName": "ds_dlake_silver_Parquet",
+								"referenceName": "ds_dlake_SilverParquet",
 								"type": "DatasetReference"
 							},
 							"name": "CustomersDataSink"
 						},
 						{
 							"dataset": {
-								"referenceName": "ds_dlake_silver_Parquet",
+								"referenceName": "ds_dlake_SilverParquet",
 								"type": "DatasetReference"
 							},
 							"name": "OrderItemsSink"
 						},
 						{
 							"dataset": {
-								"referenceName": "ds_dlake_silver_Parquet",
+								"referenceName": "ds_dlake_SilverParquet",
 								"type": "DatasetReference"
 							},
 							"name": "OrdersSink"
 						},
 						{
 							"dataset": {
-								"referenceName": "ds_dlake_silver_Parquet",
+								"referenceName": "ds_dlake_SilverParquet",
 								"type": "DatasetReference"
 							},
 							"name": "ProductsSink"
 						},
 						{
 							"dataset": {
-								"referenceName": "ds_dlake_silver_Parquet",
+								"referenceName": "ds_dlake_SilverParquet",
 								"type": "DatasetReference"
 							},
 							"name": "StoresSink"
@@ -391,8 +391,8 @@
 						"          FULL_NAME as string,",
 						"          EMAIL_ADDRESS as string,",
 						"          Ingestion_by as string,",
-						"          Ingestion_TimeStamp as string,",
-						"          Ingestion_Date as string",
+						"          Ingestion_Date as string,",
+						"          Ingestion_TimeStamp as string",
 						"     ),",
 						"     format: 'parquet',",
 						"     umask: 0022,",
@@ -407,8 +407,8 @@
 						"          FULL_NAME as string,",
 						"          EMAIL_ADDRESS as string,",
 						"          Ingestion_by as string,",
-						"          Ingestion_TimeStamp as string,",
-						"          Ingestion_Date as string",
+						"          Ingestion_Date as string,",
+						"          Ingestion_TimeStamp as string",
 						"     ),",
 						"     format: 'parquet',",
 						"     umask: 0022,",
@@ -423,8 +423,8 @@
 						"          FULL_NAME as string,",
 						"          EMAIL_ADDRESS as string,",
 						"          Ingestion_by as string,",
-						"          Ingestion_TimeStamp as string,",
-						"          Ingestion_Date as string",
+						"          Ingestion_Date as string,",
+						"          Ingestion_TimeStamp as string",
 						"     ),",
 						"     format: 'parquet',",
 						"     umask: 0022,",
@@ -439,8 +439,8 @@
 						"          FULL_NAME as string,",
 						"          EMAIL_ADDRESS as string,",
 						"          Ingestion_by as string,",
-						"          Ingestion_TimeStamp as string,",
-						"          Ingestion_Date as string",
+						"          Ingestion_Date as string,",
+						"          Ingestion_TimeStamp as string",
 						"     ),",
 						"     format: 'parquet',",
 						"     umask: 0022,",
@@ -455,8 +455,8 @@
 						"          FULL_NAME as string,",
 						"          EMAIL_ADDRESS as string,",
 						"          Ingestion_by as string,",
-						"          Ingestion_TimeStamp as string,",
-						"          Ingestion_Date as string",
+						"          Ingestion_Date as string,",
+						"          Ingestion_TimeStamp as string",
 						"     ),",
 						"     format: 'parquet',",
 						"     umask: 0022,",
@@ -498,11 +498,36 @@
 									"OrdersData": {},
 									"ProductsData": {},
 									"StoresData": {},
-									"CustomersDataSink": {},
-									"OrderItemsSink": {},
-									"OrdersSink": {},
-									"ProductsSink": {},
-									"StoresSink": {}
+									"CustomersDataSink": {
+										"p_foldername": {
+											"value": "'Customers'",
+											"type": "Expression"
+										}
+									},
+									"OrderItemsSink": {
+										"p_foldername": {
+											"value": "'OrderItems'",
+											"type": "Expression"
+										}
+									},
+									"OrdersSink": {
+										"p_foldername": {
+											"value": "'Orders'",
+											"type": "Expression"
+										}
+									},
+									"ProductsSink": {
+										"p_foldername": {
+											"value": "'Products'",
+											"type": "Expression"
+										}
+									},
+									"StoresSink": {
+										"p_foldername": {
+											"value": "'Stores'",
+											"type": "Expression"
+										}
+									}
 								}
 							},
 							"staging": {},
@@ -516,11 +541,6 @@
 				],
 				"policy": {
 					"elapsedTimeMetric": {}
-				},
-				"variables": {
-					"v_filename": {
-						"type": "String"
-					}
 				},
 				"annotations": [],
 				"lastPublishTime": "2024-08-19T14:19:00Z"
