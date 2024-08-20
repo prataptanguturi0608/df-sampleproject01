@@ -88,6 +88,29 @@
 												"typeProperties": {
 													"source": {
 														"type": "DelimitedTextSource",
+														"additionalColumns": [
+															{
+																"name": "IngestionBy",
+																"value": {
+																	"value": "'Pratap'",
+																	"type": "Expression"
+																}
+															},
+															{
+																"name": "IngestionTimeStamp",
+																"value": {
+																	"value": "@utcNow()",
+																	"type": "Expression"
+																}
+															},
+															{
+																"name": "IngestionDate",
+																"value": {
+																	"value": "@formatDateTime(utcNow(),'yyyy/MM/dd')",
+																	"type": "Expression"
+																}
+															}
+														],
 														"storeSettings": {
 															"type": "SftpReadSettings",
 															"recursive": true,
