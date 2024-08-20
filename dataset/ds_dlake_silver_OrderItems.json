@@ -20,19 +20,31 @@
 		},
 		"schema": [
 			{
-				"name": "CUSTOMER_ID",
+				"name": "ORDER_ID",
 				"type": "INT32"
 			},
 			{
-				"name": "FULL_NAME",
-				"type": "UTF8"
+				"name": "LINE_ITEM_ID",
+				"type": "INT32"
 			},
 			{
-				"name": "EMAIL_ADDRESS",
-				"type": "UTF8"
+				"name": "PRODUCT_ID",
+				"type": "INT32"
+			},
+			{
+				"name": "UNIT_PRICE",
+				"type": "DOUBLE"
+			},
+			{
+				"name": "QUANTITY",
+				"type": "INT32"
 			},
 			{
 				"name": "Ingestion_by",
+				"type": "UTF8"
+			},
+			{
+				"name": "Ingestion_TimeStamp",
 				"type": "UTF8"
 			},
 			{
@@ -40,8 +52,8 @@
 				"type": "UTF8"
 			},
 			{
-				"name": "Ingestion_TimeStamp",
-				"type": "UTF8"
+				"name": "Count",
+				"type": "INT64"
 			}
 		]
 	}
