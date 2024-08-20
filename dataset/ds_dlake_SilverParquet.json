@@ -19,7 +19,7 @@
 			"location": {
 				"type": "AzureBlobFSLocation",
 				"folderPath": {
-					"value": "@concat('customerorders/',dataset().p_filename)",
+					"value": "@concat('customerorders/',dataset().p_foldername)",
 					"type": "Expression"
 				},
 				"fileSystem": "silver"
