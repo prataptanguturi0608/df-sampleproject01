@@ -336,9 +336,9 @@
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
 				"     mapColumn(",
-				"          PRODUCT_ID = OrderItems,",
-				"          PRODUCT_NAME = STORE_NAME,",
-				"          UNIT_PRICE = WEB_ADDRESS,",
+				"          STORE_ID,",
+				"          STORE_NAME,",
+				"          WEB_ADDRESS,",
 				"          LATITUDE,",
 				"          LONGITUDE",
 				"     )) ~> StoresSink"
