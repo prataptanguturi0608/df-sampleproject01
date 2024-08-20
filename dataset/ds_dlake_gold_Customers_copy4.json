@@ -13,7 +13,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"folderPath": "CustomerOrders/OrderItems",
+				"folderPath": "CustomerOrders/Orders",
 				"fileSystem": "silver"
 			},
 			"compressionCodec": "snappy"
