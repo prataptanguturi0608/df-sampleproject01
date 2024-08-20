@@ -1,18 +1,16 @@
 {
-	"name": "ds_dlake_bronze_Json",
+	"name": "ds_dl_bronze_customers",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "ls_AzDlake",
 			"type": "LinkedServiceReference"
-		},
-		"folder": {
-			"name": "ds_SFTP to Bronze"
 		},
 		"annotations": [],
 		"type": "Json",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
+				"fileName": "customers.json",
 				"folderPath": "customerorders",
 				"fileSystem": "bronze"
 			}

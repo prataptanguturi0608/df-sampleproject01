@@ -1,0 +1,24 @@
+{
+	"name": "BronzeTosilverdataflow",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "ds_dlake_bronze_txt",
+						"type": "DatasetReference"
+					},
+					"name": "customersData"
+				}
+			],
+			"sinks": [],
+			"transformations": [],
+			"scriptLines": [
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> customersData"
+			]
+		}
+	}
+}
