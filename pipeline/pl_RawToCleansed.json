@@ -17,7 +17,39 @@
 				"typeProperties": {
 					"dataflow": {
 						"referenceName": "BronzeTosilverdataflow",
-						"type": "DataFlowReference"
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"CustomersDataSink": {
+								"p_filename": {
+									"value": "@split(variables('v_filename'),'.')[0]",
+									"type": "Expression"
+								}
+							},
+							"OrderItemsSink": {
+								"p_filename": {
+									"value": "@split(variables('v_filename'),'.')[0]",
+									"type": "Expression"
+								}
+							},
+							"OrdersSink": {
+								"p_filename": {
+									"value": "@split(variables('v_filename'),'.')[0]",
+									"type": "Expression"
+								}
+							},
+							"ProductsSink": {
+								"p_filename": {
+									"value": "@split(variables('v_filename'),'.')[0]",
+									"type": "Expression"
+								}
+							},
+							"StoresSink": {
+								"p_filename": {
+									"value": "@split(variables('v_filename'),'.')[0]",
+									"type": "Expression"
+								}
+							}
+						}
 					},
 					"compute": {
 						"coreCount": 8,
