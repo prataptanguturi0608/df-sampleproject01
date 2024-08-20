@@ -53,7 +53,7 @@
 					"isSequential": true,
 					"activities": [
 						{
-							"name": "Switch2",
+							"name": "Switch Copy Files",
 							"type": "Switch",
 							"dependsOn": [
 								{
@@ -300,6 +300,25 @@
 									"value": "@item().name",
 									"type": "Expression"
 								}
+							}
+						},
+						{
+							"name": "Execute pl_RawToCleansed",
+							"type": "ExecutePipeline",
+							"dependsOn": [
+								{
+									"activity": "Switch Copy Files",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"waitOnCompletion": true
 							}
 						}
 					]
