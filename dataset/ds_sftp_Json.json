@@ -1,0 +1,44 @@
+{
+	"name": "ds_sftp_Json",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_Sftp_source",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"p_SourceFilename": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "ds_SFTP to Bronze"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "SftpLocation",
+				"fileName": {
+					"value": "@dataset().p_SourceFilename",
+					"type": "Expression"
+				},
+				"folderPath": "/Inbound"
+			}
+		},
+		"schema": {
+			"type": "object",
+			"properties": {
+				"CUSTOMER_ID": {
+					"type": "string"
+				},
+				"FULL_NAME": {
+					"type": "string"
+				},
+				"EMAIL_ADDRESS": {
+					"type": "string"
+				}
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,19 @@
+{
+	"name": "pl_CleansedToStrucutred",
+	"properties": {
+		"activities": [
+			{
+				"name": "Wait1",
+				"type": "Wait",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"waitTimeInSeconds": 1
+				}
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2024-08-19T14:19:00Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

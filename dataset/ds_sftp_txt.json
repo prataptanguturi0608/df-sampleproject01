@@ -1,0 +1,35 @@
+{
+	"name": "ds_sftp_txt",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_Sftp_source",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"p_SourceFilename": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "ds_SFTP to Bronze"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "SftpLocation",
+				"fileName": {
+					"value": "@dataset().p_SourceFilename",
+					"type": "Expression"
+				},
+				"folderPath": "/Inbound"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

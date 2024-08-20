@@ -1,0 +1,21 @@
+{
+	"name": "ds_sftp_binary_FileList",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_Sftp_source",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "ds_SFTP to Bronze"
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "SftpLocation",
+				"folderPath": "/Inbound"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

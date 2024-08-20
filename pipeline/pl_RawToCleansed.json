@@ -1,0 +1,66 @@
+{
+	"name": "pl_RawToCleansed",
+	"properties": {
+		"activities": [
+			{
+				"name": "Bronze to Silver Data flow",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "BronzeTosilverdataflow",
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"CustomersDataSink": {
+								"p_foldername": {
+									"value": "Customers",
+									"type": "Expression"
+								}
+							},
+							"OrderItemsSink": {
+								"p_foldername": {
+									"value": "OrderItems",
+									"type": "Expression"
+								}
+							},
+							"OrdersSink": {
+								"p_foldername": {
+									"value": "Orders",
+									"type": "Expression"
+								}
+							},
+							"ProductsSink": {
+								"p_foldername": {
+									"value": "Products",
+									"type": "Expression"
+								}
+							},
+							"StoresSink": {
+								"p_foldername": {
+									"value": "Stores",
+									"type": "Expression"
+								}
+							}
+						}
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
+				}
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2024-08-19T14:19:00Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

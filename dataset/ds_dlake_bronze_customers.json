@@ -1,0 +1,45 @@
+{
+	"name": "ds_dlake_bronze_customers",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_AzDlake",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "ds_BronzetoSilver"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "customers.json",
+				"folderPath": "customerorders",
+				"fileSystem": "bronze"
+			}
+		},
+		"schema": {
+			"type": "object",
+			"properties": {
+				"CUSTOMER_ID": {
+					"type": "string"
+				},
+				"FULL_NAME": {
+					"type": "string"
+				},
+				"EMAIL_ADDRESS": {
+					"type": "string"
+				},
+				"Ingestion_by": {
+					"type": "string"
+				},
+				"Ingestion_TimeStamp": {
+					"type": "string"
+				},
+				"Ingestion_Date": {
+					"type": "string"
+				}
+			}
+		}
+	}
+}

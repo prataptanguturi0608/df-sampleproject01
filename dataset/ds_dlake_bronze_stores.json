@@ -1,0 +1,45 @@
+{
+	"name": "ds_dlake_bronze_stores",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_AzDlake",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "ds_BronzetoSilver"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "stores.json",
+				"folderPath": "customerorders",
+				"fileSystem": "bronze"
+			}
+		},
+		"schema": {
+			"type": "object",
+			"properties": {
+				"PRODUCT_ID": {
+					"type": "string"
+				},
+				"PRODUCT_NAME": {
+					"type": "string"
+				},
+				"UNIT_PRICE": {
+					"type": "string"
+				},
+				"Ingestion_by": {
+					"type": "string"
+				},
+				"Ingestion_TimeStamp": {
+					"type": "string"
+				},
+				"Ingestion_Date": {
+					"type": "string"
+				}
+			}
+		}
+	}
+}

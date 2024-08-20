@@ -1,0 +1,29 @@
+{
+	"name": "ds_blob_Archive_text",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_AzBlob_Archive",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "ds_SFTP to Archive"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"folderPath": {
+					"value": "@formatDateTime(utcNow(),'yyyy/MM/dd')",
+					"type": "Expression"
+				},
+				"container": "archive"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	}
+}
