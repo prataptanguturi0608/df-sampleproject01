@@ -1,5 +1,5 @@
 {
-	"name": "ds_dlake_gold_Stores",
+	"name": "ds_dlake_gold_OrderItems",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "ls_AzDlake",
@@ -13,7 +13,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"folderPath": "CustomerOrders/Stores",
+				"folderPath": "CustomerOrders/Customers",
 				"fileSystem": "silver"
 			},
 			"compressionCodec": "snappy"

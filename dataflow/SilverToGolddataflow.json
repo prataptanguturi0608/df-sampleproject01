@@ -5,14 +5,28 @@
 		"typeProperties": {
 			"sources": [
 				{
+					"dataset": {
+						"referenceName": "ds_dlake_gold_Customers",
+						"type": "DatasetReference"
+					},
 					"name": "source1"
 				}
 			],
 			"sinks": [],
 			"transformations": [],
 			"scriptLines": [
-				"source(allowSchemaDrift: true,",
-				"     validateSchema: false) ~> source1"
+				"source(output(",
+				"          CUSTOMER_ID as integer,",
+				"          FULL_NAME as string,",
+				"          EMAIL_ADDRESS as string,",
+				"          Ingestion_by as string,",
+				"          Ingestion_Date as string,",
+				"          Ingestion_TimeStamp as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false,",
+				"     format: 'parquet') ~> source1"
 			]
 		}
 	}
