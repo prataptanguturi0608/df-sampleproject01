@@ -5,27 +5,12 @@
 			"referenceName": "ls_AzDlake",
 			"type": "LinkedServiceReference"
 		},
-		"parameters": {
-			"p_filename": {
-				"type": "string"
-			},
-			"p_folderName": {
-				"type": "string"
-			}
-		},
 		"annotations": [],
 		"type": "Parquet",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": {
-					"value": "@dataset().p_filename",
-					"type": "Expression"
-				},
-				"folderPath": {
-					"value": "@concat('customerorders','/',dataset().p_folderName)",
-					"type": "Expression"
-				},
+				"folderPath": "customerorders",
 				"fileSystem": "bronze"
 			},
 			"compressionCodec": "snappy"
