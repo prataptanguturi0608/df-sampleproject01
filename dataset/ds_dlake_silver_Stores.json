@@ -1,5 +1,5 @@
 {
-	"name": "ds_dlake_gold_Stores",
+	"name": "ds_dlake_silver_Stores",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "ls_AzDlake",
