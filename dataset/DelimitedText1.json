@@ -13,6 +13,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
+				"fileName": "customers.json",
 				"folderPath": "customerorders",
 				"fileSystem": "bronze"
 			},
