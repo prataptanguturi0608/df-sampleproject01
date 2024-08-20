@@ -19,7 +19,7 @@
 			"location": {
 				"type": "SftpLocation",
 				"fileName": {
-					"value": "@dataset().p_SftpFilename",
+					"value": "@dataset().p_SourceFilename",
 					"type": "Expression"
 				},
 				"folderPath": "/Inbound"
