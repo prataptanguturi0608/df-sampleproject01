@@ -20,31 +20,31 @@
 						"type": "DataFlowReference",
 						"datasetParameters": {
 							"CustomersDataSink": {
-								"p_filename": {
+								"p_foldername": {
 									"value": "@split(variables('v_filename'),'.')[0]",
 									"type": "Expression"
 								}
 							},
 							"OrderItemsSink": {
-								"p_filename": {
+								"p_foldername": {
 									"value": "@split(variables('v_filename'),'.')[0]",
 									"type": "Expression"
 								}
 							},
 							"OrdersSink": {
-								"p_filename": {
+								"p_foldername": {
 									"value": "@split(variables('v_filename'),'.')[0]",
 									"type": "Expression"
 								}
 							},
 							"ProductsSink": {
-								"p_filename": {
+								"p_foldername": {
 									"value": "@split(variables('v_filename'),'.')[0]",
 									"type": "Expression"
 								}
 							},
 							"StoresSink": {
-								"p_filename": {
+								"p_foldername": {
 									"value": "@split(variables('v_filename'),'.')[0]",
 									"type": "Expression"
 								}

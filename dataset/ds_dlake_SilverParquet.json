@@ -6,7 +6,7 @@
 			"type": "LinkedServiceReference"
 		},
 		"parameters": {
-			"p_filename": {
+			"p_foldername": {
 				"type": "String"
 			}
 		},
