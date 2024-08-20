@@ -1,0 +1,45 @@
+{
+	"name": "ds_dlake_SilverParquet",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_AzDlake",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": "customerorders/customers",
+				"fileSystem": "silver"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": [
+			{
+				"name": "CUSTOMER_ID",
+				"type": "INT32"
+			},
+			{
+				"name": "FULL_NAME",
+				"type": "UTF8"
+			},
+			{
+				"name": "EMAIL_ADDRESS",
+				"type": "UTF8"
+			},
+			{
+				"name": "Ingestion_by",
+				"type": "UTF8"
+			},
+			{
+				"name": "Ingestion_Date",
+				"type": "UTF8"
+			},
+			{
+				"name": "Ingestion_TimeStamp",
+				"type": "UTF8"
+			}
+		]
+	}
+}
