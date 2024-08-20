@@ -5,6 +5,11 @@
 			"referenceName": "ls_AzDlake",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"p_filename": {
+				"type": "String"
+			}
+		},
 		"folder": {
 			"name": "ds_BronzetoSilver"
 		},
@@ -13,7 +18,10 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"folderPath": "customerorders/customers",
+				"folderPath": {
+					"value": "@concat('customerorders/',dataset().p_filename)",
+					"type": "Expression"
+				},
 				"fileSystem": "silver"
 			},
 			"compressionCodec": "snappy"
