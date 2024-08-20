@@ -5,11 +5,20 @@
 			"referenceName": "ls_AzBlob_landing",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"p_filename": {
+				"type": "String"
+			}
+		},
 		"annotations": [],
 		"type": "Binary",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
+				"fileName": {
+					"value": "@dataset().p_filename",
+					"type": "Expression"
+				},
 				"folderPath": "customerorders",
 				"container": "landing"
 			}
