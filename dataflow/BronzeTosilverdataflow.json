@@ -6,21 +6,37 @@
 			"sources": [
 				{
 					"dataset": {
-						"referenceName": "ds_dlake_bronze_txt",
+						"referenceName": "ds_dlake_bronze_customers",
 						"type": "DatasetReference"
 					},
 					"name": "customersData"
 				},
 				{
+					"dataset": {
+						"referenceName": "ds_dlake_bronze_order_items",
+						"type": "DatasetReference"
+					},
 					"name": "OrderItemsData"
 				},
 				{
+					"dataset": {
+						"referenceName": "ds_dlake_bronze_orders",
+						"type": "DatasetReference"
+					},
 					"name": "OrdersData"
 				},
 				{
+					"dataset": {
+						"referenceName": "ds_dlake_bronze_products",
+						"type": "DatasetReference"
+					},
 					"name": "ProductsData"
 				},
 				{
+					"dataset": {
+						"referenceName": "ds_dlake_bronze_stores",
+						"type": "DatasetReference"
+					},
 					"name": "StoresData"
 				}
 			],
@@ -61,21 +77,98 @@
 					"name": "StoresSink"
 				}
 			],
-			"transformations": [],
+			"transformations": [
+				{
+					"name": "cast1"
+				},
+				{
+					"name": "aggregate1"
+				},
+				{
+					"name": "select1"
+				}
+			],
 			"scriptLines": [
-				"source(allowSchemaDrift: true,",
+				"source(output(",
+				"          CUSTOMER_ID as string,",
+				"          FULL_NAME as string,",
+				"          EMAIL_ADDRESS as string,",
+				"          Ingestion_by as string,",
+				"          Ingestion_TimeStamp as string,",
+				"          Ingestion_Date as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false,",
+				"     documentForm: 'documentPerLine',",
 				"     partitionBy('hash', 1)) ~> customersData",
-				"source(allowSchemaDrift: true,",
-				"     validateSchema: false) ~> OrderItemsData",
-				"source(allowSchemaDrift: true,",
-				"     validateSchema: false) ~> OrdersData",
-				"source(allowSchemaDrift: true,",
-				"     validateSchema: false) ~> ProductsData",
-				"source(allowSchemaDrift: true,",
-				"     validateSchema: false) ~> StoresData",
-				"customersData sink(allowSchemaDrift: true,",
+				"source(output(",
+				"          ORDER_ID as string,",
+				"          LINE_ITEM_ID as string,",
+				"          PRODUCT_ID as string,",
+				"          UNIT_PRICE as string,",
+				"          QUANTITY as string,",
+				"          Ingestion_by as string,",
+				"          Ingestion_TimeStamp as string,",
+				"          Ingestion_Date as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> OrderItemsData",
+				"source(output(",
+				"          ORDER_ID as string,",
+				"          ORDER_DATETIME as string,",
+				"          CUSTOMER_ID as string,",
+				"          ORDER_STATUS as string,",
+				"          STORE_ID as string,",
+				"          Ingestion_by as string,",
+				"          Ingestion_TimeStamp as string,",
+				"          Ingestion_Date as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false,",
+				"     format: 'parquet') ~> OrdersData",
+				"source(output(",
+				"          PRODUCT_ID as string,",
+				"          PRODUCT_NAME as string,",
+				"          UNIT_PRICE as string,",
+				"          Ingestion_by as string,",
+				"          Ingestion_TimeStamp as string,",
+				"          Ingestion_Date as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false,",
+				"     documentForm: 'documentPerLine') ~> ProductsData",
+				"source(output(",
+				"          PRODUCT_ID as string,",
+				"          PRODUCT_NAME as string,",
+				"          UNIT_PRICE as string,",
+				"          Ingestion_by as string,",
+				"          Ingestion_TimeStamp as string,",
+				"          Ingestion_Date as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false,",
+				"     documentForm: 'documentPerLine') ~> StoresData",
+				"customersData cast(output(",
+				"          CUSTOMER_ID as integer",
+				"     ),",
+				"     errors: true) ~> cast1",
+				"cast1 aggregate(groupBy(CUSTOMER_ID,",
+				"          FULL_NAME,",
+				"          EMAIL_ADDRESS),",
+				"     Count = count(CUSTOMER_ID)) ~> aggregate1",
+				"aggregate1 select(mapColumn(",
+				"          CUSTOMER_ID,",
+				"          FULL_NAME,",
+				"          EMAIL_ADDRESS",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"select1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
 				"          CUSTOMER_ID as integer,",
