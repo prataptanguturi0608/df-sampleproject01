@@ -18,27 +18,6 @@
 			},
 			"compressionCodec": "snappy"
 		},
-		"schema": [
-			{
-				"name": "PRODUCT_ID",
-				"type": "UTF8"
-			},
-			{
-				"name": "PRODUCT_NAME",
-				"type": "UTF8"
-			},
-			{
-				"name": "UNIT_PRICE",
-				"type": "UTF8"
-			},
-			{
-				"name": "LATITUDE",
-				"type": "UTF8"
-			},
-			{
-				"name": "LONGITUDE",
-				"type": "UTF8"
-			}
-		]
+		"schema": []
 	}
 }
