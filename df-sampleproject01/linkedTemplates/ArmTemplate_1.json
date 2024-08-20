@@ -500,35 +500,36 @@
 									"StoresData": {},
 									"CustomersDataSink": {
 										"p_foldername": {
-											"value": "'Customers'",
+											"value": "Customers",
 											"type": "Expression"
 										}
 									},
 									"OrderItemsSink": {
 										"p_foldername": {
-											"value": "'OrderItems'",
+											"value": "OrderItems",
 											"type": "Expression"
 										}
 									},
 									"OrdersSink": {
 										"p_foldername": {
-											"value": "'Orders'",
+											"value": "Orders",
 											"type": "Expression"
 										}
 									},
 									"ProductsSink": {
 										"p_foldername": {
-											"value": "'Products'",
+											"value": "Products",
 											"type": "Expression"
 										}
 									},
 									"StoresSink": {
 										"p_foldername": {
-											"value": "'Stores'",
+											"value": "Stores",
 											"type": "Expression"
 										}
 									}
-								}
+								},
+								"linkedServiceParameters": {}
 							},
 							"staging": {},
 							"compute": {
