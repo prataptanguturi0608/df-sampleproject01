@@ -715,31 +715,31 @@
 									"type": "Expression"
 								}
 							}
-						},
-						{
-							"name": "Execute pl_RawToCleansed",
-							"type": "ExecutePipeline",
-							"dependsOn": [
-								{
-									"activity": "Switch Copy Files",
-									"dependencyConditions": [
-										"Succeeded"
-									]
-								}
-							],
-							"policy": {
-								"secureInput": false
-							},
-							"userProperties": [],
-							"typeProperties": {
-								"pipeline": {
-									"referenceName": "pl_RawToCleansed",
-									"type": "PipelineReference"
-								},
-								"waitOnCompletion": true
-							}
 						}
 					]
+				}
+			},
+			{
+				"name": "Execute pl_RawToCleansed",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "ForLoopAlltheFiles",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "pl_RawToCleansed",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
 				}
 			}
 		],
