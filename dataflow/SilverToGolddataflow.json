@@ -17,10 +17,38 @@
 						"type": "DatasetReference"
 					},
 					"name": "Orders"
+				},
+				{
+					"dataset": {
+						"referenceName": "ds_dlake_silver_Products",
+						"type": "DatasetReference"
+					},
+					"name": "Products"
+				},
+				{
+					"dataset": {
+						"referenceName": "ds_dlake_silver_Customers",
+						"type": "DatasetReference"
+					},
+					"name": "Customers"
+				},
+				{
+					"dataset": {
+						"referenceName": "ds_dlake_silver_Stores",
+						"type": "DatasetReference"
+					},
+					"name": "Stores"
 				}
 			],
 			"sinks": [],
-			"transformations": [],
+			"transformations": [
+				{
+					"name": "join1"
+				},
+				{
+					"name": "select1"
+				}
+			],
 			"scriptLines": [
 				"source(output(",
 				"          CUSTOMER_ID as integer,",
@@ -45,7 +73,60 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false,",
-				"     format: 'parquet') ~> Orders"
+				"     format: 'parquet') ~> Orders",
+				"source(output(",
+				"          CUSTOMER_ID as integer,",
+				"          FULL_NAME as string,",
+				"          EMAIL_ADDRESS as string,",
+				"          Ingestion_by as string,",
+				"          Ingestion_Date as string,",
+				"          Ingestion_TimeStamp as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false,",
+				"     format: 'parquet') ~> Products",
+				"source(output(",
+				"          CUSTOMER_ID as integer,",
+				"          FULL_NAME as string,",
+				"          EMAIL_ADDRESS as string,",
+				"          Ingestion_by as string,",
+				"          Ingestion_Date as string,",
+				"          Ingestion_TimeStamp as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false,",
+				"     format: 'parquet') ~> Customers",
+				"source(output(",
+				"          CUSTOMER_ID as integer,",
+				"          FULL_NAME as string,",
+				"          EMAIL_ADDRESS as string,",
+				"          Ingestion_by as string,",
+				"          Ingestion_Date as string,",
+				"          Ingestion_TimeStamp as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false,",
+				"     format: 'parquet') ~> Stores",
+				"OrderItems, Orders join(OrderItems@CUSTOMER_ID == Orders@CUSTOMER_ID,",
+				"     joinType:'left',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> join1",
+				"join1 select(mapColumn(",
+				"          CUSTOMER_ID = OrderItems@CUSTOMER_ID,",
+				"          FULL_NAME = OrderItems@FULL_NAME,",
+				"          EMAIL_ADDRESS = OrderItems@EMAIL_ADDRESS,",
+				"          Ingestion_by = OrderItems@Ingestion_by,",
+				"          Ingestion_Date = OrderItems@Ingestion_Date,",
+				"          Ingestion_TimeStamp = OrderItems@Ingestion_TimeStamp,",
+				"          FULL_NAME = Orders@FULL_NAME,",
+				"          EMAIL_ADDRESS = Orders@EMAIL_ADDRESS",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1"
 			]
 		}
 	}
