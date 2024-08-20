@@ -318,6 +318,10 @@
 							},
 							"userProperties": [],
 							"typeProperties": {
+								"pipeline": {
+									"referenceName": "pl_RawToCleansed",
+									"type": "PipelineReference"
+								},
 								"waitOnCompletion": true
 							}
 						}
