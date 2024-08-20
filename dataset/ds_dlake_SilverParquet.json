@@ -5,6 +5,9 @@
 			"referenceName": "ls_AzDlake",
 			"type": "LinkedServiceReference"
 		},
+		"folder": {
+			"name": "ds_BronzetoSilver"
+		},
 		"annotations": [],
 		"type": "Parquet",
 		"typeProperties": {
