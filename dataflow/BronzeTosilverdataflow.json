@@ -10,6 +10,18 @@
 						"type": "DatasetReference"
 					},
 					"name": "customersData"
+				},
+				{
+					"name": "OrderItemsData"
+				},
+				{
+					"name": "OrdersData"
+				},
+				{
+					"name": "ProductsData"
+				},
+				{
+					"name": "StoresData"
 				}
 			],
 			"sinks": [
@@ -19,13 +31,34 @@
 						"type": "DatasetReference"
 					},
 					"name": "CustomersDataSink"
+				},
+				{
+					"name": "OrderItemsSink"
+				},
+				{
+					"name": "OrdersSink"
+				},
+				{
+					"name": "ProductsSink"
+				},
+				{
+					"name": "StoresSink"
 				}
 			],
 			"transformations": [],
 			"scriptLines": [
 				"source(allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     ignoreNoFilesFound: false) ~> customersData",
+				"     ignoreNoFilesFound: false,",
+				"     partitionBy('hash', 1)) ~> customersData",
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false) ~> OrderItemsData",
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false) ~> OrdersData",
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false) ~> ProductsData",
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false) ~> StoresData",
 				"customersData sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
@@ -41,7 +74,23 @@
 				"     preCommands: [],",
 				"     postCommands: [],",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> CustomersDataSink"
+				"     skipDuplicateMapOutputs: true) ~> CustomersDataSink",
+				"OrderItemsData sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> OrderItemsSink",
+				"OrdersData sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> OrdersSink",
+				"ProductsData sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> ProductsSink",
+				"StoresData sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> StoresSink"
 			]
 		}
 	}
