@@ -1,5 +1,5 @@
 {
-	"name": "ds_dlake_bronze_customers",
+	"name": "ds_dlake_bronze_stores",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "ls_AzDlake",
@@ -13,7 +13,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": "customers.json",
+				"fileName": "stores.json",
 				"folderPath": "customerorders",
 				"fileSystem": "bronze"
 			}
@@ -21,13 +21,13 @@
 		"schema": {
 			"type": "object",
 			"properties": {
-				"CUSTOMER_ID": {
+				"PRODUCT_ID": {
 					"type": "string"
 				},
-				"FULL_NAME": {
+				"PRODUCT_NAME": {
 					"type": "string"
 				},
-				"EMAIL_ADDRESS": {
+				"UNIT_PRICE": {
 					"type": "string"
 				},
 				"Ingestion_by": {
