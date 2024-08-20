@@ -33,15 +33,31 @@
 					"name": "CustomersDataSink"
 				},
 				{
+					"dataset": {
+						"referenceName": "ds_dlake_silver_Parquet",
+						"type": "DatasetReference"
+					},
 					"name": "OrderItemsSink"
 				},
 				{
+					"dataset": {
+						"referenceName": "ds_dlake_silver_Parquet",
+						"type": "DatasetReference"
+					},
 					"name": "OrdersSink"
 				},
 				{
+					"dataset": {
+						"referenceName": "ds_dlake_silver_Parquet",
+						"type": "DatasetReference"
+					},
 					"name": "ProductsSink"
 				},
 				{
+					"dataset": {
+						"referenceName": "ds_dlake_silver_Parquet",
+						"type": "DatasetReference"
+					},
 					"name": "StoresSink"
 				}
 			],
@@ -77,18 +93,66 @@
 				"     skipDuplicateMapOutputs: true) ~> CustomersDataSink",
 				"OrderItemsData sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
+				"     input(",
+				"          CUSTOMER_ID as integer,",
+				"          FULL_NAME as string,",
+				"          EMAIL_ADDRESS as string,",
+				"          Ingestion_by as string,",
+				"          Ingestion_TimeStamp as string,",
+				"          Ingestion_Date as string",
+				"     ),",
+				"     format: 'parquet',",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> OrderItemsSink",
 				"OrdersData sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
+				"     input(",
+				"          CUSTOMER_ID as integer,",
+				"          FULL_NAME as string,",
+				"          EMAIL_ADDRESS as string,",
+				"          Ingestion_by as string,",
+				"          Ingestion_TimeStamp as string,",
+				"          Ingestion_Date as string",
+				"     ),",
+				"     format: 'parquet',",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> OrdersSink",
 				"ProductsData sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
+				"     input(",
+				"          CUSTOMER_ID as integer,",
+				"          FULL_NAME as string,",
+				"          EMAIL_ADDRESS as string,",
+				"          Ingestion_by as string,",
+				"          Ingestion_TimeStamp as string,",
+				"          Ingestion_Date as string",
+				"     ),",
+				"     format: 'parquet',",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> ProductsSink",
 				"StoresData sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
+				"     input(",
+				"          CUSTOMER_ID as integer,",
+				"          FULL_NAME as string,",
+				"          EMAIL_ADDRESS as string,",
+				"          Ingestion_by as string,",
+				"          Ingestion_TimeStamp as string,",
+				"          Ingestion_Date as string",
+				"     ),",
+				"     format: 'parquet',",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> StoresSink"
 			]
