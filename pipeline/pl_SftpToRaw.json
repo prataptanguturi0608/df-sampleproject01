@@ -99,12 +99,15 @@
 														}
 													},
 													"sink": {
-														"type": "ParquetSink",
+														"type": "DelimitedTextSink",
 														"storeSettings": {
-															"type": "AzureBlobFSWriteSettings"
+															"type": "AzureBlobFSWriteSettings",
+															"copyBehavior": "PreserveHierarchy"
 														},
 														"formatSettings": {
-															"type": "ParquetWriteSettings"
+															"type": "DelimitedTextWriteSettings",
+															"quoteAllText": true,
+															"fileExtension": ".txt"
 														}
 													},
 													"enableStaging": false,
@@ -131,7 +134,7 @@
 												],
 												"outputs": [
 													{
-														"referenceName": "ds_dlake_bronze_Parquet",
+														"referenceName": "ds_dlake_bronze_txt",
 														"type": "DatasetReference"
 													}
 												]
@@ -167,12 +170,13 @@
 														}
 													},
 													"sink": {
-														"type": "ParquetSink",
+														"type": "JsonSink",
 														"storeSettings": {
-															"type": "AzureBlobFSWriteSettings"
+															"type": "AzureBlobFSWriteSettings",
+															"copyBehavior": "PreserveHierarchy"
 														},
 														"formatSettings": {
-															"type": "ParquetWriteSettings"
+															"type": "JsonWriteSettings"
 														}
 													},
 													"enableStaging": false
@@ -191,18 +195,8 @@
 												],
 												"outputs": [
 													{
-														"referenceName": "ds_dlake_bronze_Parquet",
-														"type": "DatasetReference",
-														"parameters": {
-															"p_filename": {
-																"value": "@variables('v_Filename')",
-																"type": "Expression"
-															},
-															"p_folderName": {
-																"value": "@split(variables('v_Filename'), '.')[0]",
-																"type": "Expression"
-															}
-														}
+														"referenceName": "ds_dlake_bronze_Json",
+														"type": "DatasetReference"
 													}
 												]
 											}
@@ -239,7 +233,8 @@
 													"sink": {
 														"type": "ParquetSink",
 														"storeSettings": {
-															"type": "AzureBlobFSWriteSettings"
+															"type": "AzureBlobFSWriteSettings",
+															"copyBehavior": "PreserveHierarchy"
 														},
 														"formatSettings": {
 															"type": "ParquetWriteSettings"
@@ -270,17 +265,7 @@
 												"outputs": [
 													{
 														"referenceName": "ds_dlake_bronze_Parquet",
-														"type": "DatasetReference",
-														"parameters": {
-															"p_filename": {
-																"value": "@variables('v_Filename')",
-																"type": "Expression"
-															},
-															"p_folderName": {
-																"value": "@split(variables('v_Filename'), '.')[0]",
-																"type": "Expression"
-															}
-														}
+														"type": "DatasetReference"
 													}
 												]
 											}
