@@ -47,6 +47,21 @@
 				},
 				{
 					"name": "select1"
+				},
+				{
+					"name": "join2"
+				},
+				{
+					"name": "select2"
+				},
+				{
+					"name": "join3"
+				},
+				{
+					"name": "select3"
+				},
+				{
+					"name": "join4"
 				}
 			],
 			"scriptLines": [
@@ -115,23 +130,79 @@
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false,",
 				"     format: 'parquet') ~> Stores",
-				"OrderItems, Orders join(OrderItems@CUSTOMER_ID == Orders@CUSTOMER_ID,",
+				"OrderItems, Orders join(OrderItems@ORDER_ID == Orders@ORDER_ID,",
 				"     joinType:'left',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
 				"     broadcast: 'auto')~> join1",
 				"join1 select(mapColumn(",
-				"          CUSTOMER_ID = OrderItems@CUSTOMER_ID,",
-				"          FULL_NAME = OrderItems@FULL_NAME,",
-				"          EMAIL_ADDRESS = OrderItems@EMAIL_ADDRESS,",
+				"          ORDER_ID = OrderItems@ORDER_ID,",
+				"          LINE_ITEM_ID,",
+				"          PRODUCT_ID,",
+				"          UNIT_PRICE,",
+				"          QUANTITY,",
 				"          Ingestion_by = OrderItems@Ingestion_by,",
-				"          Ingestion_Date = OrderItems@Ingestion_Date,",
 				"          Ingestion_TimeStamp = OrderItems@Ingestion_TimeStamp,",
+				"          Ingestion_Date = OrderItems@Ingestion_Date,",
+				"          ORDER_ID = Orders@ORDER_ID,",
+				"          ORDER_DATETIME,",
+				"          ORDER_STATUS,",
+				"          CUSTOMER_ID,",
+				"          STORE_ID",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"select1, Products join(select1@PRODUCT_ID == Products@PRODUCT_ID,",
+				"     joinType:'left',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> join2",
+				"join2 select(mapColumn(",
+				"          ORDER_ID,",
+				"          LINE_ITEM_ID,",
+				"          PRODUCT_ID = select1@PRODUCT_ID,",
+				"          UNIT_PRICE = select1@UNIT_PRICE,",
+				"          QUANTITY,",
+				"          Ingestion_by = select1@Ingestion_by,",
+				"          Ingestion_TimeStamp = select1@Ingestion_TimeStamp,",
+				"          Ingestion_Date = select1@Ingestion_Date,",
+				"          ORDER_DATETIME,",
+				"          ORDER_STATUS,",
+				"          CUSTOMER_ID,",
+				"          STORE_ID,",
+				"          PRODUCT_NAME",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select2",
+				"select2, Customers join(select2@CUSTOMER_ID == Customers@CUSTOMER_ID,",
+				"     joinType:'left',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> join3",
+				"join3 select(mapColumn(",
+				"          ORDER_ID,",
+				"          LINE_ITEM_ID,",
+				"          PRODUCT_ID,",
+				"          UNIT_PRICE,",
+				"          QUANTITY,",
+				"          Ingestion_by = select2@Ingestion_by,",
+				"          Ingestion_TimeStamp = select2@Ingestion_TimeStamp,",
+				"          Ingestion_Date = select2@Ingestion_Date,",
+				"          ORDER_DATETIME,",
+				"          ORDER_STATUS,",
+				"          CUSTOMER_ID = select2@CUSTOMER_ID,",
+				"          STORE_ID,",
+				"          PRODUCT_NAME,",
 				"          FULL_NAME,",
 				"          EMAIL_ADDRESS",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> select1"
+				"     skipDuplicateMapOutputs: true) ~> select3",
+				"select3, Stores join(STORE_ID == ERROR_FUNCTION(''),",
+				"     joinType:'left',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> join4"
 			]
 		}
 	}
