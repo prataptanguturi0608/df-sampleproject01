@@ -10,9 +10,6 @@
 				"type": "string"
 			}
 		},
-		"folder": {
-			"name": "SftpToLanding"
-		},
 		"annotations": [],
 		"type": "Parquet",
 		"typeProperties": {
@@ -48,5 +45,6 @@
 				"type": "UTF8"
 			}
 		]
-	}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
 }

@@ -10,9 +10,6 @@
 				"type": "string"
 			}
 		},
-		"folder": {
-			"name": "SftpToLanding"
-		},
 		"annotations": [],
 		"type": "DelimitedText",
 		"typeProperties": {
@@ -30,5 +27,6 @@
 			"quoteChar": "\""
 		},
 		"schema": []
-	}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
 }
