@@ -12,12 +12,36 @@
 					"name": "customersData"
 				}
 			],
-			"sinks": [],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "ds_dlake_silver_Parquet",
+						"type": "DatasetReference"
+					},
+					"name": "CustomersDataSink"
+				}
+			],
 			"transformations": [],
 			"scriptLines": [
 				"source(allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     ignoreNoFilesFound: false) ~> customersData"
+				"     ignoreNoFilesFound: false) ~> customersData",
+				"customersData sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          CUSTOMER_ID as integer,",
+				"          FULL_NAME as string,",
+				"          EMAIL_ADDRESS as string,",
+				"          Ingestion_by as string,",
+				"          Ingestion_TimeStamp as string,",
+				"          Ingestion_Date as string",
+				"     ),",
+				"     format: 'parquet',",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> CustomersDataSink"
 			]
 		}
 	}
