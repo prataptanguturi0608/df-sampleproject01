@@ -1,6 +1,9 @@
 {
 	"name": "BronzeTosilverdataflow",
 	"properties": {
+		"folder": {
+			"name": "ADF_sampleproject01"
+		},
 		"type": "MappingDataFlow",
 		"typeProperties": {
 			"sources": [

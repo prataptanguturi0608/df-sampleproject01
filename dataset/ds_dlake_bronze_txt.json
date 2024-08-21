@@ -6,7 +6,7 @@
 			"type": "LinkedServiceReference"
 		},
 		"folder": {
-			"name": "ds_SFTP to Bronze"
+			"name": "ADF_sampleproject01/ds_SFTP to Bronze"
 		},
 		"annotations": [],
 		"type": "DelimitedText",

@@ -11,7 +11,7 @@
 			}
 		},
 		"folder": {
-			"name": "ds_BronzetoSilver"
+			"name": "ADF_sampleproject01/ds_BronzetoSilver"
 		},
 		"annotations": [],
 		"type": "Parquet",

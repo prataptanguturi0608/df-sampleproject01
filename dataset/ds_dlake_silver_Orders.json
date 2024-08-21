@@ -6,7 +6,7 @@
 			"type": "LinkedServiceReference"
 		},
 		"folder": {
-			"name": "ds_Silver to Gold"
+			"name": "ADF_sampleproject01/ds_Silver to Gold"
 		},
 		"annotations": [],
 		"type": "Parquet",
