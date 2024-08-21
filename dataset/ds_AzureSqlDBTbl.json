@@ -5,6 +5,9 @@
 			"referenceName": "ls_AzureSqlDatabase",
 			"type": "LinkedServiceReference"
 		},
+		"folder": {
+			"name": "ADF_sampleproject01/ds_Silver to Gold"
+		},
 		"annotations": [],
 		"type": "AzureSqlTable",
 		"schema": [],

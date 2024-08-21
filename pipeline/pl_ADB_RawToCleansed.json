@@ -1,10 +1,10 @@
 {
-	"name": "pl_CleansedToStrucutred",
+	"name": "pl_ADB_RawToCleansed",
 	"properties": {
 		"activities": [
 			{
-				"name": "SilverToGoldDataflow",
-				"type": "ExecuteDataFlow",
+				"name": "BronzetoSilverDataTransfer",
+				"type": "DatabricksNotebook",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -15,20 +15,16 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"dataflow": {
-						"referenceName": "SilverToGolddataflow",
-						"type": "DataFlowReference"
-					},
-					"compute": {
-						"coreCount": 8,
-						"computeType": "General"
-					},
-					"traceLevel": "Fine"
+					"notebookPath": "/Workspace/Shared/SampleProject01/Project01/Notebook_BronzetoSilverDataTransfer"
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_ADB_BronzeToSilver",
+					"type": "LinkedServiceReference"
 				}
 			}
 		],
 		"folder": {
-			"name": "ADF_SampleProject01"
+			"name": "ADB_sampleproject01"
 		},
 		"annotations": [],
 		"lastPublishTime": "2024-08-19T14:19:00Z"
