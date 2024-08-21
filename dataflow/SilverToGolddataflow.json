@@ -33,15 +33,7 @@
 					"name": "Customers"
 				}
 			],
-			"sinks": [
-				{
-					"dataset": {
-						"referenceName": "ds_blob_Archive_Parquet",
-						"type": "DatasetReference"
-					},
-					"name": "sink1"
-				}
-			],
+			"sinks": [],
 			"transformations": [
 				{
 					"name": "join1"
@@ -60,6 +52,12 @@
 				},
 				{
 					"name": "select3"
+				},
+				{
+					"name": "aggregate1"
+				},
+				{
+					"name": "select4"
 				}
 			],
 			"scriptLines": [
@@ -181,21 +179,41 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> select3",
-				"select3 sink(allowSchemaDrift: true,",
-				"     validateSchema: false,",
-				"     input(",
-				"          ORDER_ID as string,",
-				"          ORDER_DATETIME as string,",
-				"          CUSTOMER_ID as string,",
-				"          ORDER_STATUS as string,",
-				"          STORE_ID as string,",
-				"          Ingestion_by as string,",
-				"          Ingestion_TimeStamp as string,",
-				"          Ingestion_Date as string",
+				"select3 aggregate(groupBy(ORDER_ID,",
+				"          PRODUCT_ID,",
+				"          LINE_ITEM_ID,",
+				"          UNIT_PRICE,",
+				"          QUANTITY,",
+				"          ORDER_DATETIME,",
+				"          ORDER_STATUS,",
+				"          CUSTOMER_ID,",
+				"          STORE_ID,",
+				"          PRODUCT_NAME,",
+				"          FULL_NAME,",
+				"          EMAIL_ADDRESS,",
+				"          Ingestion_by,",
+				"          Ingestion_TimeStamp,",
+				"          Ingestion_Date),",
+				"     count = count()) ~> aggregate1",
+				"aggregate1 select(mapColumn(",
+				"          ORDER_ID,",
+				"          PRODUCT_ID,",
+				"          LINE_ITEM_ID,",
+				"          UNIT_PRICE,",
+				"          QUANTITY,",
+				"          ORDER_DATETIME,",
+				"          ORDER_STATUS,",
+				"          CUSTOMER_ID,",
+				"          STORE_ID,",
+				"          PRODUCT_NAME,",
+				"          FULL_NAME,",
+				"          EMAIL_ADDRESS,",
+				"          Ingestion_by,",
+				"          Ingestion_TimeStamp,",
+				"          Ingestion_Date",
 				"     ),",
-				"     format: 'parquet',",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> sink1"
+				"     skipDuplicateMapOutputs: true) ~> select4"
 			]
 		}
 	}
