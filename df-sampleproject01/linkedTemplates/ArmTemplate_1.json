@@ -22,7 +22,7 @@
 					"type": "LinkedServiceReference"
 				},
 				"folder": {
-					"name": "ds_Silver to Gold"
+					"name": "ADF_sampleproject01/ds_Silver to Gold"
 				},
 				"annotations": [],
 				"type": "Parquet",
@@ -85,7 +85,7 @@
 					"type": "LinkedServiceReference"
 				},
 				"folder": {
-					"name": "ds_Silver to Gold"
+					"name": "ADF_sampleproject01/ds_Silver to Gold"
 				},
 				"annotations": [],
 				"type": "Parquet",
@@ -144,7 +144,7 @@
 					"type": "LinkedServiceReference"
 				},
 				"folder": {
-					"name": "ds_Silver to Gold"
+					"name": "ADF_sampleproject01/ds_Silver to Gold"
 				},
 				"annotations": [],
 				"type": "Parquet",
@@ -195,7 +195,7 @@
 					"type": "LinkedServiceReference"
 				},
 				"folder": {
-					"name": "ds_Silver to Gold"
+					"name": "ADF_sampleproject01/ds_Silver to Gold"
 				},
 				"annotations": [],
 				"type": "Parquet",
@@ -247,7 +247,7 @@
 					}
 				},
 				"folder": {
-					"name": "ds_SFTP to Bronze"
+					"name": "ADF_sampleproject01/ds_SFTP to Bronze"
 				},
 				"annotations": [],
 				"type": "Json",
@@ -293,7 +293,7 @@
 					}
 				},
 				"folder": {
-					"name": "ds_SFTP to Bronze"
+					"name": "ADF_sampleproject01/ds_SFTP to Bronze"
 				},
 				"annotations": [],
 				"type": "Parquet",
@@ -343,7 +343,7 @@
 					"type": "LinkedServiceReference"
 				},
 				"folder": {
-					"name": "ds_SFTP to Bronze"
+					"name": "ADF_sampleproject01/ds_SFTP to Bronze"
 				},
 				"annotations": [],
 				"type": "Binary",
@@ -371,7 +371,7 @@
 					}
 				},
 				"folder": {
-					"name": "ds_SFTP to Bronze"
+					"name": "ADF_sampleproject01/ds_SFTP to Bronze"
 				},
 				"annotations": [],
 				"type": "DelimitedText",
@@ -398,6 +398,9 @@
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
 			"properties": {
+				"folder": {
+					"name": "ADF_sampleproject01"
+				},
 				"type": "MappingDataFlow",
 				"typeProperties": {
 					"sources": [
@@ -752,6 +755,9 @@
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
 			"properties": {
+				"folder": {
+					"name": "ADF_sampleproject01"
+				},
 				"type": "MappingDataFlow",
 				"typeProperties": {
 					"sources": [
@@ -1018,14 +1024,7 @@
 					{
 						"name": "SilverToGoldDataflow",
 						"type": "ExecuteDataFlow",
-						"dependsOn": [
-							{
-								"activity": "Stored procedure1",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
+						"dependsOn": [],
 						"policy": {
 							"timeout": "0.12:00:00",
 							"retry": 0,
@@ -1054,67 +1053,13 @@
 							},
 							"traceLevel": "Fine"
 						}
-					},
-					{
-						"name": "Stored procedure1",
-						"type": "SqlServerStoredProcedure",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"storedProcedureName": "[[dbo].[sp_LogPipelineExecDetails]",
-							"storedProcedureParameters": {
-								"DataFactoryName": {
-									"value": {
-										"value": "@pipeline().DataFactory",
-										"type": "Expression"
-									},
-									"type": "String"
-								},
-								"PipelineName": {
-									"value": {
-										"value": "@pipeline().Pipeline",
-										"type": "Expression"
-									},
-									"type": "String"
-								},
-								"PipelineRunId": {
-									"value": {
-										"value": "@pipeline().RunId",
-										"type": "Expression"
-									},
-									"type": "String"
-								},
-								"PipelineTriggerName": {
-									"value": {
-										"value": "@pipeline().TriggerName",
-										"type": "Expression"
-									},
-									"type": "String"
-								},
-								"PipelineTriggerTime": {
-									"value": {
-										"value": "@pipeline().TriggerTime",
-										"type": "Expression"
-									},
-									"type": "String"
-								}
-							}
-						},
-						"linkedServiceName": {
-							"referenceName": "ls_AzureSqlDatabase",
-							"type": "LinkedServiceReference"
-						}
 					}
 				],
 				"policy": {
 					"elapsedTimeMetric": {}
+				},
+				"folder": {
+					"name": "ADF_SampleProject01"
 				},
 				"annotations": [],
 				"lastPublishTime": "2024-08-19T14:19:00Z"
@@ -1202,6 +1147,8 @@
 					{
 						"name": "Stored procedure2",
 						"type": "SqlServerStoredProcedure",
+						"state": "Inactive",
+						"onInactiveMarkAs": "Succeeded",
 						"dependsOn": [],
 						"policy": {
 							"timeout": "0.12:00:00",
@@ -1280,6 +1227,9 @@
 				],
 				"policy": {
 					"elapsedTimeMetric": {}
+				},
+				"folder": {
+					"name": "ADF_SampleProject01"
 				},
 				"annotations": [],
 				"lastPublishTime": "2024-08-19T14:19:00Z"
@@ -2052,6 +2002,8 @@
 					{
 						"name": "Stored procedure1",
 						"type": "SqlServerStoredProcedure",
+						"state": "Inactive",
+						"onInactiveMarkAs": "Succeeded",
 						"dependsOn": [],
 						"policy": {
 							"timeout": "0.12:00:00",
@@ -2114,6 +2066,9 @@
 					"v_Filename": {
 						"type": "String"
 					}
+				},
+				"folder": {
+					"name": "ADF_SampleProject01"
 				},
 				"annotations": [],
 				"lastPublishTime": "2024-08-19T16:25:42Z"
