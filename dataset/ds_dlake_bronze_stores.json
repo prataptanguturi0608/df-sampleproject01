@@ -21,22 +21,28 @@
 		"schema": {
 			"type": "object",
 			"properties": {
-				"PRODUCT_ID": {
+				"STORE_ID": {
 					"type": "string"
 				},
-				"PRODUCT_NAME": {
+				"STORE_NAME": {
 					"type": "string"
 				},
-				"UNIT_PRICE": {
+				"WEB_ADDRESS": {
 					"type": "string"
 				},
-				"Ingestion_by": {
+				"LATITUDE": {
 					"type": "string"
 				},
-				"Ingestion_TimeStamp": {
+				"LONGITUDE": {
 					"type": "string"
 				},
-				"Ingestion_Date": {
+				"IngestionBy": {
+					"type": "string"
+				},
+				"IngestionTimestamp": {
+					"type": "string"
+				},
+				"IngestionDate": {
 					"type": "string"
 				}
 			}

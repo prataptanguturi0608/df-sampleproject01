@@ -1,0 +1,60 @@
+{
+	"name": "ds_dlake_silver_OrderItems",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_AzDlake",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "ds_Silver to Gold"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": "CustomerOrders/OrderItems",
+				"fileSystem": "silver"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": [
+			{
+				"name": "ORDER_ID",
+				"type": "INT32"
+			},
+			{
+				"name": "LINE_ITEM_ID",
+				"type": "INT32"
+			},
+			{
+				"name": "PRODUCT_ID",
+				"type": "INT32"
+			},
+			{
+				"name": "UNIT_PRICE",
+				"type": "DOUBLE"
+			},
+			{
+				"name": "QUANTITY",
+				"type": "INT32"
+			},
+			{
+				"name": "Ingestion_by",
+				"type": "UTF8"
+			},
+			{
+				"name": "Ingestion_TimeStamp",
+				"type": "UTF8"
+			},
+			{
+				"name": "Ingestion_Date",
+				"type": "UTF8"
+			},
+			{
+				"name": "Count",
+				"type": "INT64"
+			}
+		]
+	}
+}

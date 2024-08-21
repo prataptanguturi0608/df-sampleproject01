@@ -1,0 +1,56 @@
+{
+	"name": "ds_dlake_silver_Orders",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_AzDlake",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "ds_Silver to Gold"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": "CustomerOrders/Orders",
+				"fileSystem": "silver"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": [
+			{
+				"name": "ORDER_ID",
+				"type": "INT32"
+			},
+			{
+				"name": "ORDER_DATETIME",
+				"type": "UTF8"
+			},
+			{
+				"name": "ORDER_STATUS",
+				"type": "UTF8"
+			},
+			{
+				"name": "CUSTOMER_ID",
+				"type": "INT32"
+			},
+			{
+				"name": "STORE_ID",
+				"type": "INT32"
+			},
+			{
+				"name": "Ingestion_by",
+				"type": "UTF8"
+			},
+			{
+				"name": "Ingestion_TimeStamp",
+				"type": "UTF8"
+			},
+			{
+				"name": "Ingestion_Date",
+				"type": "UTF8"
+			}
+		]
+	}
+}
