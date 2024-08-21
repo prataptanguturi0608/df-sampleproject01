@@ -5,6 +5,8 @@
 			{
 				"name": "Bronze to Silver Data flow",
 				"type": "ExecuteDataFlow",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -61,14 +63,7 @@
 			{
 				"name": "Stored procedure2",
 				"type": "SqlServerStoredProcedure",
-				"dependsOn": [
-					{
-						"activity": "Fail1",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
+				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -88,10 +83,7 @@
 							"type": "String"
 						},
 						"Error_message": {
-							"value": {
-								"value": "@activity('Fail1').output.pipelineReturnValue",
-								"type": "Expression"
-							},
+							"value": "null",
 							"type": "String"
 						},
 						"PipelineName": {
@@ -152,6 +144,12 @@
 				"dependsOn": [
 					{
 						"activity": "Bronze to Silver Data flow",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "Stored procedure2",
 						"dependencyConditions": [
 							"Succeeded"
 						]
