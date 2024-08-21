@@ -54,6 +54,10 @@
 		"ls_Sftp_source_properties_typeProperties_userName": {
 			"type": "string",
 			"defaultValue": "819a9d6fe5aa44c6b2b473c9ef36a63d"
+		},
+		"ls_ADB_BronzeToSilver_properties_typeProperties_existingClusterId": {
+			"type": "string",
+			"defaultValue": "masternode"
 		}
 	},
 	"variables": {
@@ -2948,6 +2952,62 @@
 				"[concat(variables('factoryId'), '/datasets/ds_dlake_silver_Customers')]",
 				"[concat(variables('factoryId'), '/datasets/ds_AzureSqlDBTbl')]"
 			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pl_ADB_RawToCleansed')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "BronzetoSilverDataTransfer",
+						"type": "DatabricksNotebook",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": "/Workspace/Shared/SampleProject01/Project01/Notebook_BronzetoSilverDataTransfer"
+						},
+						"linkedServiceName": {
+							"referenceName": "ls_ADB_BronzeToSilver",
+							"type": "LinkedServiceReference"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"folder": {
+					"name": "ADB_sampleproject01"
+				},
+				"annotations": [],
+				"lastPublishTime": "2024-08-19T14:19:00Z"
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ls_ADB_BronzeToSilver')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ls_ADB_BronzeToSilver')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureDatabricks",
+				"typeProperties": {
+					"domain": "https://adb-1504801268539580.0.azuredatabricks.net",
+					"authentication": "MSI",
+					"workspaceResourceId": "/subscriptions/5ac19727-3b9f-4957-ad42-341520c72ac2/resourceGroups/MFSRG/providers/Microsoft.Databricks/workspaces/dbproject01",
+					"existingClusterId": "[parameters('ls_ADB_BronzeToSilver_properties_typeProperties_existingClusterId')]"
+				}
+			},
+			"dependsOn": []
 		}
 	]
 }

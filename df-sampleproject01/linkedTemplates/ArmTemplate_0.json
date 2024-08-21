@@ -54,6 +54,10 @@
 		"ls_Sftp_source_properties_typeProperties_userName": {
 			"type": "string",
 			"defaultValue": "819a9d6fe5aa44c6b2b473c9ef36a63d"
+		},
+		"ls_ADB_BronzeToSilver_properties_typeProperties_existingClusterId": {
+			"type": "string",
+			"defaultValue": "masternode"
 		}
 	},
 	"variables": {
@@ -155,6 +159,22 @@
 						"type": "SecureString",
 						"value": "[parameters('ls_Sftp_source_password')]"
 					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ls_ADB_BronzeToSilver')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureDatabricks",
+				"typeProperties": {
+					"domain": "https://adb-1504801268539580.0.azuredatabricks.net",
+					"authentication": "MSI",
+					"workspaceResourceId": "/subscriptions/5ac19727-3b9f-4957-ad42-341520c72ac2/resourceGroups/MFSRG/providers/Microsoft.Databricks/workspaces/dbproject01",
+					"existingClusterId": "[parameters('ls_ADB_BronzeToSilver_properties_typeProperties_existingClusterId')]"
 				}
 			},
 			"dependsOn": []
@@ -788,59 +808,6 @@
 					"quoteChar": "\""
 				},
 				"schema": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/ls_AzDlake')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/ds_dlake_silver_Customers')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "ls_AzDlake",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "ADF_sampleproject01/ds_Silver to Gold"
-				},
-				"annotations": [],
-				"type": "Parquet",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"folderPath": "CustomerOrders/Customers",
-						"fileSystem": "silver"
-					},
-					"compressionCodec": "snappy"
-				},
-				"schema": [
-					{
-						"name": "CUSTOMER_ID",
-						"type": "INT32"
-					},
-					{
-						"name": "FULL_NAME",
-						"type": "UTF8"
-					},
-					{
-						"name": "EMAIL_ADDRESS",
-						"type": "UTF8"
-					},
-					{
-						"name": "Ingestion_by",
-						"type": "UTF8"
-					},
-					{
-						"name": "Ingestion_Date",
-						"type": "UTF8"
-					},
-					{
-						"name": "Ingestion_TimeStamp",
-						"type": "UTF8"
-					}
-				]
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/ls_AzDlake')]"

@@ -40,6 +40,9 @@
 		},
 		"ls_Sftp_source_properties_typeProperties_userName": {
 			"value": "819a9d6fe5aa44c6b2b473c9ef36a63d"
+		},
+		"ls_ADB_BronzeToSilver_properties_typeProperties_existingClusterId": {
+			"value": "masternode"
 		}
 	}
 }
