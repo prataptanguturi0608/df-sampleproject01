@@ -239,6 +239,7 @@
 				"     skipDuplicateMapOutputs: true) ~> select2",
 				"OrdersData cast(output(",
 				"          ORDER_ID as integer,",
+				"          ORDER_DATETIME as timestamp,",
 				"          CUSTOMER_ID as integer,",
 				"          STORE_ID as integer",
 				"     ),",
