@@ -49,13 +49,6 @@
 									"type": "Expression"
 								}
 							}
-						},
-						"linkedServiceParameters": {
-							"StoresSink": {
-								"schemaLinkedService": {
-									"p_foldername": "stores"
-								}
-							}
 						}
 					},
 					"compute": {
