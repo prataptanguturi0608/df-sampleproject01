@@ -17,20 +17,14 @@
 		"ls_AzDlake_accountKey": {
 			"value": ""
 		},
-		"ls_Sftp_source_password": {
+		"ls_AzureSqlDatabase_password": {
 			"value": ""
 		},
-		"ls_AzureSqlDatabase_password": {
+		"ls_Sftp_source_password": {
 			"value": ""
 		},
 		"ls_AzDlake_properties_typeProperties_url": {
 			"value": "https://dlakeadf.dfs.core.windows.net/"
-		},
-		"ls_Sftp_source_properties_typeProperties_host": {
-			"value": "eu-central-1.sftpcloud.io"
-		},
-		"ls_Sftp_source_properties_typeProperties_userName": {
-			"value": "819a9d6fe5aa44c6b2b473c9ef36a63d"
 		},
 		"ls_AzureSqlDatabase_properties_typeProperties_server": {
 			"value": "mfsdbserv01.database.windows.net"
@@ -40,6 +34,12 @@
 		},
 		"ls_AzureSqlDatabase_properties_typeProperties_userName": {
 			"value": "sa-airbus"
+		},
+		"ls_Sftp_source_properties_typeProperties_host": {
+			"value": "eu-central-1.sftpcloud.io"
+		},
+		"ls_Sftp_source_properties_typeProperties_userName": {
+			"value": "819a9d6fe5aa44c6b2b473c9ef36a63d"
 		}
 	}
 }

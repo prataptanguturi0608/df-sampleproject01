@@ -23,25 +23,17 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'ls_AzDlake'"
 		},
-		"ls_Sftp_source_password": {
-			"type": "secureString",
-			"metadata": "Secure string for 'password' of 'ls_Sftp_source'"
-		},
 		"ls_AzureSqlDatabase_password": {
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'ls_AzureSqlDatabase'"
 		},
+		"ls_Sftp_source_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'ls_Sftp_source'"
+		},
 		"ls_AzDlake_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://dlakeadf.dfs.core.windows.net/"
-		},
-		"ls_Sftp_source_properties_typeProperties_host": {
-			"type": "string",
-			"defaultValue": "eu-central-1.sftpcloud.io"
-		},
-		"ls_Sftp_source_properties_typeProperties_userName": {
-			"type": "string",
-			"defaultValue": "819a9d6fe5aa44c6b2b473c9ef36a63d"
 		},
 		"ls_AzureSqlDatabase_properties_typeProperties_server": {
 			"type": "string",
@@ -54,6 +46,14 @@
 		"ls_AzureSqlDatabase_properties_typeProperties_userName": {
 			"type": "string",
 			"defaultValue": "sa-airbus"
+		},
+		"ls_Sftp_source_properties_typeProperties_host": {
+			"type": "string",
+			"defaultValue": "eu-central-1.sftpcloud.io"
+		},
+		"ls_Sftp_source_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "819a9d6fe5aa44c6b2b473c9ef36a63d"
 		},
 		"containerUri": {
 			"type": "string",
@@ -94,20 +94,14 @@
 					"ls_AzDlake_accountKey": {
 						"value": "[parameters('ls_AzDlake_accountKey')]"
 					},
-					"ls_Sftp_source_password": {
-						"value": "[parameters('ls_Sftp_source_password')]"
-					},
 					"ls_AzureSqlDatabase_password": {
 						"value": "[parameters('ls_AzureSqlDatabase_password')]"
 					},
+					"ls_Sftp_source_password": {
+						"value": "[parameters('ls_Sftp_source_password')]"
+					},
 					"ls_AzDlake_properties_typeProperties_url": {
 						"value": "[parameters('ls_AzDlake_properties_typeProperties_url')]"
-					},
-					"ls_Sftp_source_properties_typeProperties_host": {
-						"value": "[parameters('ls_Sftp_source_properties_typeProperties_host')]"
-					},
-					"ls_Sftp_source_properties_typeProperties_userName": {
-						"value": "[parameters('ls_Sftp_source_properties_typeProperties_userName')]"
 					},
 					"ls_AzureSqlDatabase_properties_typeProperties_server": {
 						"value": "[parameters('ls_AzureSqlDatabase_properties_typeProperties_server')]"
@@ -117,6 +111,12 @@
 					},
 					"ls_AzureSqlDatabase_properties_typeProperties_userName": {
 						"value": "[parameters('ls_AzureSqlDatabase_properties_typeProperties_userName')]"
+					},
+					"ls_Sftp_source_properties_typeProperties_host": {
+						"value": "[parameters('ls_Sftp_source_properties_typeProperties_host')]"
+					},
+					"ls_Sftp_source_properties_typeProperties_userName": {
+						"value": "[parameters('ls_Sftp_source_properties_typeProperties_userName')]"
 					}
 				}
 			},
