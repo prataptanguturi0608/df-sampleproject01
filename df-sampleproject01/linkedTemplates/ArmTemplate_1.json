@@ -13,6 +13,65 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/ds_dlake_silver_Orders')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ls_AzDlake",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "ds_Silver to Gold"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"folderPath": "CustomerOrders/Orders",
+						"fileSystem": "silver"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": [
+					{
+						"name": "ORDER_ID",
+						"type": "INT32"
+					},
+					{
+						"name": "ORDER_DATETIME",
+						"type": "UTF8"
+					},
+					{
+						"name": "ORDER_STATUS",
+						"type": "UTF8"
+					},
+					{
+						"name": "CUSTOMER_ID",
+						"type": "INT32"
+					},
+					{
+						"name": "STORE_ID",
+						"type": "INT32"
+					},
+					{
+						"name": "Ingestion_by",
+						"type": "UTF8"
+					},
+					{
+						"name": "Ingestion_TimeStamp",
+						"type": "UTF8"
+					},
+					{
+						"name": "Ingestion_Date",
+						"type": "UTF8"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/ds_dlake_silver_Products')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -57,53 +116,6 @@
 					},
 					{
 						"name": "Ingestion_Date",
-						"type": "UTF8"
-					}
-				]
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/ds_dlake_silver_Stores')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "ls_AzDlake",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "ds_Silver to Gold"
-				},
-				"annotations": [],
-				"type": "Parquet",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"folderPath": "CustomerOrders/Stores",
-						"fileSystem": "silver"
-					},
-					"compressionCodec": "snappy"
-				},
-				"schema": [
-					{
-						"name": "STORE_ID",
-						"type": "INT32"
-					},
-					{
-						"name": "STORE_NAME",
-						"type": "UTF8"
-					},
-					{
-						"name": "WEB_ADDRESS",
-						"type": "UTF8"
-					},
-					{
-						"name": "LATITUDE",
-						"type": "UTF8"
-					},
-					{
-						"name": "LONGITUDE",
 						"type": "UTF8"
 					}
 				]
@@ -268,6 +280,72 @@
 					"quoteChar": "\""
 				},
 				"schema": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ds_dlake_silver_stores')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ls_AzDlake",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "ds_Silver to Gold"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"folderPath": "CustomerOrders/Stores",
+						"fileSystem": "silver"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": [
+					{
+						"name": "STORE_ID",
+						"type": "INT32"
+					},
+					{
+						"name": "STORE_NAME",
+						"type": "UTF8"
+					},
+					{
+						"name": "WEB_ADDRESS",
+						"type": "UTF8"
+					},
+					{
+						"name": "LATITUDE",
+						"type": "UTF8"
+					},
+					{
+						"name": "LONGITUDE",
+						"type": "UTF8"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ds_AzureSqlDBTbl')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ls_AzureSqlDatabase",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "TBL_CustomersOrders"
+				}
 			},
 			"dependsOn": []
 		},
@@ -467,7 +545,9 @@
 						"     ignoreNoFilesFound: false,",
 						"     documentForm: 'documentPerLine') ~> StoresData",
 						"customersData cast(output(",
-						"          CUSTOMER_ID as integer",
+						"          CUSTOMER_ID as integer,",
+						"          Ingestion_TimeStamp as timestamp,",
+						"          Ingestion_Date as date",
 						"     ),",
 						"     errors: true) ~> cast1",
 						"cast1 aggregate(groupBy(CUSTOMER_ID,",
@@ -512,6 +592,7 @@
 						"     skipDuplicateMapOutputs: true) ~> select2",
 						"OrdersData cast(output(",
 						"          ORDER_ID as integer,",
+						"          ORDER_DATETIME as timestamp,",
 						"          CUSTOMER_ID as integer,",
 						"          STORE_ID as integer",
 						"     ),",
@@ -662,10 +743,10 @@
 					"sinks": [
 						{
 							"dataset": {
-								"referenceName": "ds_blob_Archive_Parquet",
+								"referenceName": "ds_AzureSqlDBTbl",
 								"type": "DatasetReference"
 							},
-							"name": "sink1"
+							"name": "SQLDW"
 						}
 					],
 					"transformations": [
@@ -686,6 +767,12 @@
 						},
 						{
 							"name": "select3"
+						},
+						{
+							"name": "aggregate1"
+						},
+						{
+							"name": "select4"
 						}
 					],
 					"scriptLines": [
@@ -807,26 +894,75 @@
 						"     ),",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true) ~> select3",
-						"select3 sink(allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     input(",
-						"          ORDER_ID as string,",
-						"          ORDER_DATETIME as string,",
-						"          CUSTOMER_ID as string,",
-						"          ORDER_STATUS as string,",
-						"          STORE_ID as string,",
-						"          Ingestion_by as string,",
-						"          Ingestion_TimeStamp as string,",
-						"          Ingestion_Date as string",
+						"select3 aggregate(groupBy(ORDER_ID,",
+						"          PRODUCT_ID,",
+						"          LINE_ITEM_ID,",
+						"          UNIT_PRICE,",
+						"          QUANTITY,",
+						"          ORDER_DATETIME,",
+						"          ORDER_STATUS,",
+						"          CUSTOMER_ID,",
+						"          STORE_ID,",
+						"          PRODUCT_NAME,",
+						"          FULL_NAME,",
+						"          EMAIL_ADDRESS,",
+						"          Ingestion_by,",
+						"          Ingestion_TimeStamp,",
+						"          Ingestion_Date),",
+						"     count = count()) ~> aggregate1",
+						"aggregate1 select(mapColumn(",
+						"          ORDER_ID,",
+						"          PRODUCT_ID,",
+						"          PRODUCT_NAME,",
+						"          LINE_ITEM_ID,",
+						"          UNIT_PRICE,",
+						"          QUANTITY,",
+						"          CUSTOMER_ID,",
+						"          FULL_NAME,",
+						"          EMAIL_ADDRESS,",
+						"          ORDER_DATETIME,",
+						"          ORDER_STATUS,",
+						"          STORE_ID,",
+						"          Ingestion_by,",
+						"          Ingestion_TimeStamp,",
+						"          Ingestion_Date",
 						"     ),",
-						"     format: 'parquet',",
 						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true) ~> sink1"
+						"     skipDuplicateMapOutputs: true) ~> select4",
+						"select4 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError',",
+						"     mapColumn(",
+						"          ORDER_ID,",
+						"          PRODUCT_ID,",
+						"          LINE_ITEM_ID,",
+						"          UNIT_PRICE,",
+						"          QUANTITY,",
+						"          ORDER_DATETIME,",
+						"          ORDER_STATUS,",
+						"          CUSTOMER_ID,",
+						"          STORE_ID,",
+						"          PRODUCT_NAME,",
+						"          FULL_NAME,",
+						"          EMAIL_ADDRESS,",
+						"          Ingestion_by,",
+						"          Ingestion_TimeStamp,",
+						"          Ingestion_Date",
+						"     )) ~> SQLDW"
 					]
 				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/ds_dlake_silver_Products')]"
+				"[concat(variables('factoryId'), '/datasets/ds_dlake_silver_Orders')]",
+				"[concat(variables('factoryId'), '/datasets/ds_dlake_silver_Products')]",
+				"[concat(variables('factoryId'), '/datasets/ds_AzureSqlDBTbl')]"
 			]
 		},
 		{
@@ -836,7 +972,7 @@
 			"properties": {
 				"activities": [
 					{
-						"name": "SilverToGolddataflow",
+						"name": "SilverToGoldDataflow",
 						"type": "ExecuteDataFlow",
 						"dependsOn": [],
 						"policy": {
@@ -857,7 +993,7 @@
 									"Orders": {},
 									"Products": {},
 									"Customers": {},
-									"sink1": {}
+									"SQLDW": {}
 								}
 							},
 							"staging": {},
@@ -939,13 +1075,7 @@
 										}
 									}
 								},
-								"linkedServiceParameters": {
-									"StoresSink": {
-										"schemaLinkedService": {
-											"p_foldername": "stores"
-										}
-									}
-								}
+								"linkedServiceParameters": {}
 							},
 							"staging": {},
 							"compute": {

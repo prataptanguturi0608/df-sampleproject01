@@ -27,6 +27,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'ls_Sftp_source'"
 		},
+		"ls_AzureSqlDatabase_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'ls_AzureSqlDatabase'"
+		},
 		"ls_AzDlake_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://dlakeadf.dfs.core.windows.net/"
@@ -38,6 +42,18 @@
 		"ls_Sftp_source_properties_typeProperties_userName": {
 			"type": "string",
 			"defaultValue": "819a9d6fe5aa44c6b2b473c9ef36a63d"
+		},
+		"ls_AzureSqlDatabase_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "mfsdbserv01.database.windows.net"
+		},
+		"ls_AzureSqlDatabase_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "SampleProject01"
+		},
+		"ls_AzureSqlDatabase_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "sa-airbus"
 		}
 	},
 	"variables": {
@@ -116,6 +132,28 @@
 					"password": {
 						"type": "SecureString",
 						"value": "[parameters('ls_Sftp_source_password')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ls_AzureSqlDatabase')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlDatabase",
+				"typeProperties": {
+					"server": "[parameters('ls_AzureSqlDatabase_properties_typeProperties_server')]",
+					"database": "[parameters('ls_AzureSqlDatabase_properties_typeProperties_database')]",
+					"encrypt": "mandatory",
+					"trustServerCertificate": false,
+					"authenticationType": "SQL",
+					"userName": "[parameters('ls_AzureSqlDatabase_properties_typeProperties_userName')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('ls_AzureSqlDatabase_password')]"
 					}
 				}
 			},
@@ -842,67 +880,6 @@
 					{
 						"name": "Count",
 						"type": "INT64"
-					}
-				]
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/ls_AzDlake')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/ds_dlake_silver_Orders')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "ls_AzDlake",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "ds_Silver to Gold"
-				},
-				"annotations": [],
-				"type": "Parquet",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"folderPath": "CustomerOrders/Orders",
-						"fileSystem": "silver"
-					},
-					"compressionCodec": "snappy"
-				},
-				"schema": [
-					{
-						"name": "ORDER_ID",
-						"type": "INT32"
-					},
-					{
-						"name": "ORDER_DATETIME",
-						"type": "UTF8"
-					},
-					{
-						"name": "ORDER_STATUS",
-						"type": "UTF8"
-					},
-					{
-						"name": "CUSTOMER_ID",
-						"type": "INT32"
-					},
-					{
-						"name": "STORE_ID",
-						"type": "INT32"
-					},
-					{
-						"name": "Ingestion_by",
-						"type": "UTF8"
-					},
-					{
-						"name": "Ingestion_TimeStamp",
-						"type": "UTF8"
-					},
-					{
-						"name": "Ingestion_Date",
-						"type": "UTF8"
 					}
 				]
 			},
