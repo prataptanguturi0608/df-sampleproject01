@@ -33,7 +33,15 @@
 					"name": "Customers"
 				}
 			],
-			"sinks": [],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "ds_AzureSqlDBTbl",
+						"type": "DatasetReference"
+					},
+					"name": "SQLDW"
+				}
+			],
 			"transformations": [
 				{
 					"name": "join1"
@@ -213,7 +221,17 @@
 				"          Ingestion_Date",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> select4"
+				"     skipDuplicateMapOutputs: true) ~> select4",
+				"select4 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> SQLDW"
 			]
 		}
 	}
