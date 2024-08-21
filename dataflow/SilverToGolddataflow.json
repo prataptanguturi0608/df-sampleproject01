@@ -231,7 +231,24 @@
 				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     errorHandlingOption: 'stopOnFirstError') ~> SQLDW"
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          ORDER_ID,",
+				"          PRODUCT_ID,",
+				"          LINE_ITEM_ID,",
+				"          UNIT_PRICE,",
+				"          QUANTITY,",
+				"          ORDER_DATETIME,",
+				"          ORDER_STATUS,",
+				"          CUSTOMER_ID,",
+				"          STORE_ID,",
+				"          PRODUCT_NAME,",
+				"          FULL_NAME,",
+				"          EMAIL_ADDRESS,",
+				"          Ingestion_by,",
+				"          Ingestion_TimeStamp,",
+				"          Ingestion_Date",
+				"     )) ~> SQLDW"
 			]
 		}
 	}
