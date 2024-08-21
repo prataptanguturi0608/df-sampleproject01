@@ -812,6 +812,9 @@
 				"type": "String"
 			}
 		},
+		"folder": {
+			"name": "ADF_SampleProject01"
+		},
 		"annotations": [],
 		"lastPublishTime": "2024-08-19T16:25:42Z"
 	},

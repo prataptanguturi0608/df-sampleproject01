@@ -91,6 +91,9 @@
 				}
 			}
 		],
+		"folder": {
+			"name": "ADF_SampleProject01"
+		},
 		"annotations": [],
 		"lastPublishTime": "2024-08-19T14:19:00Z"
 	},
