@@ -7,7 +7,14 @@
 				"type": "ExecuteDataFlow",
 				"state": "Inactive",
 				"onInactiveMarkAs": "Succeeded",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "Stored procedure2",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -144,12 +151,6 @@
 				"dependsOn": [
 					{
 						"activity": "Bronze to Silver Data flow",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					},
-					{
-						"activity": "Stored procedure2",
 						"dependencyConditions": [
 							"Succeeded"
 						]
