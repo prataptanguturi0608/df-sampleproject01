@@ -15,7 +15,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"notebookPath": "/Workspace/Shared/SampleProject01/Notebook_BronzetoSilverDataTransfer"
+					"notebookPath": "/Workspace/Shared/SampleProject01/Project01/Notebook_BronzetoSilverDataTransfer"
 				},
 				"linkedServiceName": {
 					"referenceName": "ls_ADB_BronzeToSilver",
